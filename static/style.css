@@ -33,30 +33,34 @@ body {
 }
 .row {
     margin: 0;
-    height: 16px;
+    height: 25px;
 }
 
 .field{
 
     background-color: black;
-    height: 16px;
-    width: 16px;
+    height: 25px;
+    width: 25px;
     display: inline-block;
 }
 .first_enemy{
-    /*background-image: url('images/');*/
-    /*background-size: contain;*/
-    background-color: cyan;
+    background-image: url('images/1.png');
+    background-size: contain;
 }
 .second_enemy{
-        /*background-image: url('images/');*/
-    background-color: green;
+    background-image: url('images/2.png');
+    background-size: contain;
 }
 .third_enemy{
-        /*background-image: url('images/');*/
-    background-color: yellow;
+    background-image: url('images/3.png');
+    background-size: contain;
+}
+.fourth_enemy{
+    background-image: url('images/4.png');
+    background-size: contain;
 }
 .player{
-        /*background-image: url('images/');*/
-    background-color: cornflowerblue;
+    background-image: url('images/player1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
