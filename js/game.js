@@ -8,6 +8,7 @@ const game = {
         const cols = 28;
         let cellIndex = 0;
         const sprite = {
+            '462': 'player',
             '90':"first_enemy",
             '92':"first_enemy",
             '94':"first_enemy",
@@ -60,5 +61,5 @@ const game = {
                         data-col="${col}"></div>`);
     },
 }
-// ${isEnemy ? {} : ''}
+
 game.init();

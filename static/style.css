@@ -37,17 +37,26 @@ body {
 }
 
 .field{
-    background-color: red;
+
+    background-color: black;
     height: 16px;
     width: 16px;
     display: inline-block;
 }
 .first_enemy{
+    /*background-image: url('images/');*/
+    /*background-size: contain;*/
     background-color: cyan;
 }
 .second_enemy{
+        /*background-image: url('images/');*/
     background-color: green;
 }
 .third_enemy{
+        /*background-image: url('images/');*/
     background-color: yellow;
+}
+.player{
+        /*background-image: url('images/');*/
+    background-color: cornflowerblue;
 }
