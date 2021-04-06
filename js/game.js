@@ -1,11 +1,12 @@
 const game = {
+    rows : 18,
+    cols : 28,
     init: function () {
         this.drawBoard();
+        this.initKeyPress();
     },
     drawBoard: function () {
         let gameField = document.querySelector(".game-field");
-        const rows = 18;
-        const cols = 28;
         let cellIndex = 0;
         const sprite = {
             '462': 'player',
@@ -34,12 +35,10 @@ const game = {
             '214':"third_enemy",
             '216':"third_enemy",
         }
-        for (let row = 0; row < rows; row++) {
+        for (let row = 0; row < this.rows; row++) {
             const rowElement = this.addRow(gameField);
-            for (let col = 0; col < cols; col++) {
+            for (let col = 0; col < this.cols; col++) {
                 const index = cellIndex.toString();
-                console.log(sprite[index])
-
                 this.addCell(rowElement, row, col, sprite[index], cellIndex)
                 cellIndex++;
             }
@@ -60,6 +59,32 @@ const game = {
                         data-row="${row}"
                         data-col="${col}"></div>`);
     },
+    initKeyPress: function(){
+        document.addEventListener('keydown', this.logKey);
+
+    },
+    logKey: function(e) {
+            if (e.key==="ArrowLeft"){
+                game.moveLeft();
+            }
+            else if (e.key==="ArrowRight"){
+                game.moveRight();
+            }
+    },
+    moveLeft: function(){
+        let playerPos = document.querySelector('.player');
+        if (playerPos.dataset.col !== "0"){
+            playerPos.previousSibling.classList.add("player");
+            playerPos.classList.remove("player");
+        }
+    },
+    moveRight: function(){
+        let playerPos = document.querySelector('.player');
+        if (parseInt(playerPos.dataset.col) !== this.cols-1){
+            playerPos.nextSibling.classList.add("player");
+            playerPos.classList.remove("player");
+            }
+        },
 }
 
 game.init();
