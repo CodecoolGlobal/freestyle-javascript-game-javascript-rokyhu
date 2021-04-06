@@ -42,3 +42,12 @@ body {
     width: 16px;
     display: inline-block;
 }
+.first_enemy{
+    background-color: cyan;
+}
+.second_enemy{
+    background-color: green;
+}
+.third_enemy{
+    background-color: yellow;
+}
