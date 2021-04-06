@@ -1,0 +1,48 @@
+@font-face {
+
+}
+
+body {
+    margin: 0;
+    background-image: url("images/arcade-wallpaper.jpg");
+
+}
+
+.arcade-machine {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    bottom: 0;
+    position: relative;
+    background: url(images/Arcade-Classics-frame-900px.png) no-repeat center center fixed;
+    -webkit-background-size: 900px;
+    -moz-background-size: 900px;
+    -o-background-size: 900px;
+    background-size: 900px;
+
+}
+.board-header{
+    display: inherit;
+    justify-content: center;
+    padding-bottom: 9px;
+}
+.game-container {
+    width: 450px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: darkseagreen;
+}
+.row{
+    display: inherit;
+    padding: 0 9px 0 9px;
+}
+.board-field{
+    width: 24px;
+    height: 24px;
+    text-align: center;
+}
