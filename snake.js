@@ -40,16 +40,40 @@ const game = {
             '<div class="game-board"></div>'
         );
     },
+    snakeMovement: function (){
+        let direction = 'right';
+        setInterval(function (){
+            if(direction === "right"){
+                game.rightMovementLogic()
+            }
+        },300)
+    },
+    rightMovementLogic: function (){
+        let snakeHead = document.querySelector('.snake-head');
+        let snakeTail = document.querySelector('.snake-tail');
+
+        snakeHead.classList.remove('snake-head');
+        snakeHead.classList.add('snake');
+        snakeHead = snakeHead.nextSibling;
+        snakeHead.classList.add('snake-head');
+        snakeTail.classList.remove('snake-tail');
+        snakeTail.classList.remove('snake');
+        snakeTail = snakeTail.nextSibling;
+        snakeTail.classList.add('snake-tail');
+    },
     placeSnakeOnBoard: function (){
-        let snakePart0 = document.querySelector('[data-row="4"][data-col="4"]');
-        let snakePart1 = document.querySelector('[data-row="4"][data-col="5"]');
-        let snakePart2 = document.querySelector('[data-row="4"][data-col="6"]');
 
         for (let i = 7; i < 10; i++){
-            document.querySelector(`[data-row="4"][data-col="${i}"]`).style.backgroundColor = "yellow";
+            if(i === 7){
+                document.querySelector(`[data-row="4"][data-col="${i}"]`).classList.toggle('snake-tail');
+            } else if (i === 9){
+                document.querySelector(`[data-row="4"][data-col="${i}"]`).classList.toggle('snake-head');
+            } else {
+                document.querySelector(`[data-row="4"][data-col="${i}"]`).classList.toggle('snake');
+            }
         }
     }
 }
 game.createBoard()
-
+game.snakeMovement()
 

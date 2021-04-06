@@ -53,3 +53,8 @@ body {
     padding: 0 9px 0 9px;
     border: thick solid black;
 }
+.snake,
+.snake-tail,
+.snake-head{
+    background-color: yellow;
+}
