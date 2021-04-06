@@ -31,3 +31,14 @@ body {
     height: 300px;
     background-color: darkseagreen;
 }
+.row {
+    margin: 0;
+    height: 16px;
+}
+
+.field{
+    background-color: red;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+}
