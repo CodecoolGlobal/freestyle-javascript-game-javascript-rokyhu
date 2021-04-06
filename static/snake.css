@@ -29,6 +29,7 @@ body {
     display: inherit;
     justify-content: center;
     padding-bottom: 9px;
+    border: thick solid black;
 }
 .game-container {
     width: 450px;
@@ -39,10 +40,16 @@ body {
 }
 .row{
     display: inherit;
-    padding: 0 9px 0 9px;
+    /*padding: 0 9px 0 9px;*/
 }
 .board-field{
     width: 24px;
     height: 24px;
     text-align: center;
+}
+.game-board{
+    display: inherit;
+    flex-direction: column;
+    padding: 0 9px 0 9px;
+    border: thick solid black;
 }
