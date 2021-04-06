@@ -1,39 +1,45 @@
 const game = {
-    rows : 18,
-    cols : 28,
+    rows : 12,
+    cols : 18,
     init: function () {
         this.drawBoard();
         this.initKeyPress();
+        this. moveInvaders();
     },
     drawBoard: function () {
         let gameField = document.querySelector(".game-field");
         let cellIndex = 0;
         const sprite = {
-            '462': 'player',
-            '90':"first_enemy",
-            '92':"first_enemy",
-            '94':"first_enemy",
-            '96':"first_enemy",
-            '98':"first_enemy",
-            '100':"first_enemy",
-            '102':"first_enemy",
-            '104':"first_enemy",
-            '106':"first_enemy",
-            '147':"second_enemy",
-            '149':"second_enemy",
-            '151':"second_enemy",
-            '153':"second_enemy",
-            '155':"second_enemy",
-            '157':"second_enemy",
-            '159':"second_enemy",
-            '161':"second_enemy",
-            '204':"third_enemy",
-            '206':"third_enemy",
-            '208':"third_enemy",
-            '210':"third_enemy",
-            '212':"third_enemy",
-            '214':"third_enemy",
-            '216':"third_enemy",
+            '189': 'player',
+            '20':"first_enemy",
+            '22':"first_enemy",
+            '24':"first_enemy",
+            '26':"first_enemy",
+            '28':"first_enemy",
+            '30':"first_enemy",
+            '32':"first_enemy",
+            '39':"second_enemy",
+            '41':"second_enemy",
+            '43':"second_enemy",
+            '45':"second_enemy",
+            '47':"second_enemy",
+            '49':"second_enemy",
+            '51':"second_enemy",
+            '56':"third_enemy",
+            '58':"third_enemy",
+            '60':"third_enemy",
+            '62':"third_enemy",
+            '64':"third_enemy",
+            '66':"third_enemy",
+            '68':"third_enemy",
+            '75':"fourth_enemy",
+            '77':"fourth_enemy",
+            '79':"fourth_enemy",
+            '81':"fourth_enemy",
+            '83':"fourth_enemy",
+            '85':"fourth_enemy",
+            '87':"fourth_enemy",
+
         }
         for (let row = 0; row < this.rows; row++) {
             const rowElement = this.addRow(gameField);
@@ -85,6 +91,57 @@ const game = {
             playerPos.classList.remove("player");
             }
         },
+
+    moveInvaders: function () {
+        // let enemyDivs = document.querySelectorAll('[class*=enemy]')
+        // let enemyColumns = [...enemyDivs].map(item => {
+        //     return item.dataset.col; })
+        // // console.log(enemyDivs);
+        // //
+        // let direction = "left";
+        // for (let index = 0; index < enemyDivs.length; index++) {
+        //     let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
+            // console.log(enemyClass);
+                    setInterval(function () {
+                        let enemyDivs = document.querySelectorAll('[class*=enemy]')
+        let enemyColumns = [...enemyDivs].map(item => {
+            return item.dataset.col; })
+        let direction = "left";
+        for (let index = 0; index < enemyDivs.length; index++) {
+            let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
+                    setInterval(function () {
+                        if (direction === "left" && !enemyColumns.includes('0')) {
+                            enemyDivs[index].previousSibling.classList.add('field', enemyClass);
+                            enemyDivs[index].classList.remove(enemyClass);
+                        }
+                        else if (direction === "right" && !enemyColumns.includes('17')) {
+                            enemyDivs[index].nextSibling.classList.add('field', enemyClass);
+                            enemyDivs[index].classList.remove(enemyClass);
+                            // console.log('direction === "right"')
+                        }
+                        if (enemyColumns.includes('0')) {
+                            direction = "right";
+                            enemyDivs[index].classList.remove(enemyClass);
+                            enemyDivs[index].nextSibling.classList.add('field', enemyClass);
+                            // console.log('0')
+                        }
+                        // else {
+                        //     direction = "left";
+                        // }
+                        if (enemyColumns.includes('17')) {
+                            direction = "left";
+                            enemyDivs[index].classList.remove(enemyClass);
+                            enemyDivs[index].previousSibling.classList.add('field', enemyClass);
+                            // console.log('17')
+                        }
+                        // else {
+                        //     direction = "right"
+                        //     // console.log('left')
+                        // }
+
+            }, 500)}}, 1989)
+
+    }
 }
 
 game.init();
