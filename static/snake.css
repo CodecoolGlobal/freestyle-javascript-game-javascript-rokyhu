@@ -5,8 +5,11 @@ src: url("fonts/nokia-font.ttf");
 
 body {
     margin: 0;
-    background-image: url("images/arcade-wallpaper.jpg");
-
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    -webkit-background-size: 100vw;
+    -moz-background-size: 100vw;
+    -o-background-size: 100vw;
+    background-size: 100vw;
 }
 
 .arcade-machine {
@@ -19,11 +22,11 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-900px.png) no-repeat center center fixed;
-    -webkit-background-size: 900px;
-    -moz-background-size: 900px;
-    -o-background-size: 900px;
-    background-size: 900px;
+    background: url(images/Arcade-Classics-frame-1200px.png) no-repeat center center fixed;
+    -webkit-background-size: 1200px;
+    -moz-background-size: 1200px;
+    -o-background-size: 1200px;
+    background-size: 1200px;
 
 }
 .board-header{
@@ -62,10 +65,10 @@ body {
   30%  {filter: invert(0);}
   40%  {filter: invert(0);}
   50%  {filter: invert(0);}
-  60%  {filter: invert(20%);}
-  70%  {filter: invert(40%);}
-  80%  {filter: invert(60%);}
-  90%  {filter: invert(80%);}
+  60%  {filter: invert(0%);}
+  70%  {filter: invert(25%);}
+  80%  {filter: invert(50%);}
+  90%  {filter: invert(75%);}
   100% {filter: invert(100%);}
 }
 
