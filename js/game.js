@@ -2,6 +2,7 @@ const game = {
     rows : 12,
     cols : 18,
     life: 5,
+
     initStartScreen: function (){
         let mainScreen = document.querySelector('.game-field');
           mainScreen.innerHTML = '';
@@ -14,12 +15,21 @@ const game = {
     },
     init: function () {
         this.clearScreen();
+        this.createHeader();
         this.drawBoard();
         this.initKeyPress();
         this. moveInvaders();
         this.initInvadersShoot();
-
     },
+
+    createHeader: function () {
+        if (! document.querySelector(".board-header")) {
+            let board = document.querySelector('.game-container');
+                board.insertAdjacentHTML(
+                    'afterbegin',
+                    '<div class="board-header"><div class="score">0</div><div>0:21</div></div>'
+            )}
+        },
     drawBoard: function () {
         let gameField = document.querySelector(".game-field");
         let cellIndex = 0;
@@ -140,7 +150,7 @@ const game = {
       );
         document.getElementById('restart').onclick = function(){
         game.initStartScreen();
-        game.init();
+        game.init(); //TODO !!! how to stop function and run it from beginning
         }
         document.getElementById('back').onclick = function(){window.history.back()}
     },
@@ -167,21 +177,22 @@ const game = {
             if (i!==0) {
                 let shootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i}"]`);
                 let prevShootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i+1}"]`);
-                shootPos.classList.add('shoot');
-                if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
-                || shootPos.classList.contains("fourth_enemy") || shootPos.classList.contains("bomb")){
-                    clearInterval(shootStart);
-                    game.clearShootBeams();
-                    let enemyClass = shootPos.getAttribute('class').split(" ")[1];
-                    shootPos.classList.remove(enemyClass);
-                    let gameStatus = game.checkIfWon();
-                    if (gameStatus) {
+                if (shootPos !== null && prevShootPos !== null) {
+                    shootPos.classList.add('shoot'); //TODO why is value null?
+                    if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
+                    || shootPos.classList.contains("fourth_enemy") || shootPos.classList.contains("bomb")){
                         clearInterval(shootStart);
-                        game.initWinScreen()
+                        game.clearShootBeams();
+                        let enemyClass = shootPos.getAttribute('class').split(" ")[1];
+                        shootPos.classList.remove(enemyClass);
+                        let gameStatus = game.checkIfWon();
+                        if (gameStatus) {
+                            clearInterval(shootStart);
+                            game.initWinScreen()
+                            }
                         }
-                    }
                 prevShootPos.classList.remove('shoot');
-                i--;
+                i--;}
             }else{
                 clearInterval(shootStart);
                 game.clearShootBeams();
@@ -232,13 +243,15 @@ const game = {
 
     moveBombs: function () {
         let allBombs = document.querySelectorAll(".bomb")
-        game.checkIfHit();
+        if (allBombs.length > 0){
+        game.checkIfHit();}
         for (let bomb of allBombs) {
             let row = parseInt(bomb.dataset.row);
             let shootInvStart = setInterval(function () {
                 if (row < 10) {
                     let nextShootPos = document.querySelector(`.field[data-col="${bomb.dataset.col}"][data-row="${parseInt(bomb.dataset.row) + 1}"]`);
-                    nextShootPos.classList.add('bomb');
+                    if (nextShootPos !== null) {
+                    nextShootPos.classList.add('bomb');} //TODO why is value null?
                 } else {
                     clearInterval(shootInvStart);
                     bomb.classList.remove('bomb');
@@ -246,7 +259,19 @@ const game = {
                 bomb.classList.remove('bomb');
                 row++;
             }, 100);
-        }},
+        }
+    },
+
+    moveDown: function (enemyDivs) {
+        for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
+            let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
+            let i = enemyDivs[newIndex].dataset.col;
+            let j = enemyDivs[newIndex].dataset.row;
+            let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
+            enemyDivs[newIndex].classList.remove(enemyClass);
+            lower.classList.add(enemyClass);
+        }
+    },
 
     moveInvaders: function () {
         let direction = "left";
@@ -259,8 +284,10 @@ const game = {
             let enemyDivs = document.querySelectorAll('[class*=enemy]')
         let enemyColumns = [...enemyDivs].map(item => {
             return item.dataset.col; })
+
         for (let index = 0; index < enemyDivs.length; index++) {
             let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
+
             if (direction === "left" && !enemyColumns.includes('0')) {
                 enemyDivs[index].previousSibling.classList.add(enemyClass);
                 enemyDivs[index].classList.remove(enemyClass);
@@ -271,26 +298,14 @@ const game = {
             }
             if (enemyColumns.includes('0') && direction === "left") {
                 direction = "right";
-                for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
-                    let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
-                    let i = enemyDivs[newIndex].dataset.col;
-                    let j = enemyDivs[newIndex].dataset.row;
-                    let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
-                    enemyDivs[newIndex].classList.remove(enemyClass);
-                    lower.classList.add(enemyClass);
-                }}
-            if (enemyColumns.includes('17') && direction === "right") {
+                game.moveDown(enemyDivs)}
+            else if (enemyColumns.includes('17') && direction === "right") {
                  direction = "left";
-                 for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
-                     let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
-                    let i = enemyDivs[newIndex].dataset.col;
-                    let j = enemyDivs[newIndex].dataset.row;
-                 let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
-                 enemyDivs[newIndex].classList.remove(enemyClass);
-                 lower.classList.add(enemyClass);
-                 }
+                game.moveDown(enemyDivs)}
+
             }
-        }}, 1000)
+
+        }, 800)
     },
 }
 game.initStartScreen();
