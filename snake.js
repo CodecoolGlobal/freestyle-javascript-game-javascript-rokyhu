@@ -4,7 +4,7 @@ window.onload = () => {
         direction: [0, -1], // default left dir
         snakeElements: [],
         snakeMoveInterval: {},
-        powerupLocation: [0, 0],
+        powerupLocation: [3, 2],
         score: 0,
 
         initGame: function () {
@@ -50,7 +50,11 @@ window.onload = () => {
                 row_idx = row;
                 col_idx = col;
                 targetField = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
-            } while (targetField.classList.contains('snake') !== false);
+            } while (targetField.classList.contains('snake') ||
+                     targetField.classList.contains('snake-head-up') ||
+                     targetField.classList.contains('snake-head-down') ||
+                     targetField.classList.contains('snake-head-left') ||
+                     targetField.classList.contains('snake-head-right'));
             targetField.classList.add('snake-food')
             game.powerupLocation = [row_idx, col_idx];
         },
