@@ -1,12 +1,11 @@
 document.addEventListener("keydown", function (event){
-    console.log(event.key)
-    if(event.key === 'ArrowUp'){
+    if(event.key === 'ArrowUp' && game.direction[0] !== 1 && game.direction[1] !== 0){
         game.direction = [-1, 0];
-    } else if(event.key === 'ArrowDown'){
+    } else if(event.key === 'ArrowDown' && game.direction[0] !== -1 && game.direction[1] !== 0){
         game.direction = [1, 0];
-    } else if(event.key === 'ArrowLeft'){
+    } else if(event.key === 'ArrowLeft' && game.direction[0] !== 0 && game.direction[1] !== 1){
         game.direction = [0, -1];
-    } else if(event.key === 'ArrowRight'){
+    } else if(event.key === 'ArrowRight' && game.direction[0] !== 0 && game.direction[1] !== -1){
         game.direction = [0, 1];
     }
 });
@@ -25,7 +24,6 @@ const game = {
                 this.addCol(newRow, row_idx, col_idx);
             }
         }
-        // this.placeSnakeOnBoard()
     },
     addRow: function (board) {
         board.insertAdjacentHTML(
