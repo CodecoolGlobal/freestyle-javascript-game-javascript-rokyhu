@@ -62,18 +62,38 @@ const game = {
         try {
             document.querySelector(`[data-row="${snakeElements[0][0]}"][data-col="${snakeElements[0][1]}"]`).classList.add('snake')
             document.querySelector(`[data-row="${snakeElements[snakeElements.length - 1][0]}"][data-col="${snakeElements[snakeElements.length - 1][1]}"]`).classList.remove('snake')
-        } catch {
-            clearInterval(snakeMoveInterval);
-            alert('Game Over')
+        } catch {  // this is when snake goes off the board
+            game.gameOver()
         }
+    },
+
+    gameOver: function (snakeElements) {
+        clearInterval(snakeMoveInterval);
+            alert('Game Over')
     },
 
     moveSnake: function (snakeElements) {
         let currentDir = game.direction;
         let newSnakeHeadIndex = [parseInt(`${snakeElements[0][0]+currentDir[0]}`), parseInt(`${snakeElements[0][1]+currentDir[1]}`)];
-        snakeElements.splice(0, 0, newSnakeHeadIndex);
+        let inSnake = game.isNewSnakeHeadInSnake(snakeElements, newSnakeHeadIndex);
+        console.log(inSnake)
+        if (game.isNewSnakeHeadInSnake(snakeElements, newSnakeHeadIndex)) {
+            game.gameOver();
+        } else {
+            snakeElements.splice(0, 0, newSnakeHeadIndex);
+        }
+
         game.updateBoard(snakeElements)
         snakeElements.pop();
+    },
+
+    isNewSnakeHeadInSnake: function(snakeElements, newSnakeHeadIndex) {
+        for (let elem of snakeElements) {
+            if (elem.toString() === newSnakeHeadIndex.toString()) {
+                return true
+            }
+        }
+        return false
     },
 
     snakeMove: function () {
