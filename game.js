@@ -1,7 +1,32 @@
-initGame();
+window.onload = () => {
 
-function initGame() {
+    const menu = {
 
-    // Your game can start here, but define separate functions, don't write everything in here :)
+        initMenu: function() {
+            let gameOptions = document.querySelectorAll('.game-option')
+            let startGame = document.querySelector('.start-game')
+            for (let game of gameOptions) {
+                game.addEventListener("click", handleGameOptions);
+            }
+            startGame.addEventListener("click", handleGameStart );
 
-}
+            function handleGameOptions() {
+                 for (let game of gameOptions) {
+                    game.classList.toggle('selected')
+                 }
+            }
+
+            function handleGameStart() {
+                let selectedGame = document.querySelector('.selected')
+                if (selectedGame.classList.contains('snake')) {
+                    window.location.href = '/snake.html';
+                } else {
+                    window.location.href = '/space-invader.html';
+                }
+            }
+        },
+    }
+
+    menu.initMenu();
+
+};

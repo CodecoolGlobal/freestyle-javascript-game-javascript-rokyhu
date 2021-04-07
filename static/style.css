@@ -31,4 +31,28 @@ body {
     width: 450px;
     height: 300px;
     background-color: darkseagreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.menu-item {
+    font-family: NokiaFont, sans-serif;
+    font-size: 1.5rem;
+    padding: 18px 18px 0 18px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #212f18;
+    height: 20%;
+    display: flex;
+    align-items: baseline;
+}
+
+.game-option, .menu-option {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #2d4307;
+    color: darkseagreen;
 }
