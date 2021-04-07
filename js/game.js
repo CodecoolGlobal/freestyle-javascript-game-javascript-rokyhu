@@ -113,7 +113,7 @@ const game = {
         let mainScreen = document.querySelector('.game-field');
         mainScreen.insertAdjacentHTML(
           'beforeend',
-          '<div class="msgbox">\n' +
+          '<div class="gameoverscreen">\n' +
           // '    <h3 class="titlemsg">Game over</h3>\n' +
           // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
           '    <button class="myButton" id="restart">Restart</button>\n' +
@@ -124,21 +124,25 @@ const game = {
             game.initStartScreen();
             game.init();
             }
-
+        document.getElementById('back').onclick = function(){window.history.back()}
     },
     initWinScreen: function(){
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
         mainScreen.insertAdjacentHTML(
           'beforeend',
-          '<div class="msgbox">\n' +
+          '<div class="winscreen">\n' +
           // '    <h3 class="titlemsg">Game over</h3>\n' +
           // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
           '    <button class="myButton" id="restart">Restart</button>\n' +
           '    <button class="myButton" id="back">Back</button>\n' +
           '</div>'
       );
-
+        document.getElementById('restart').onclick = function(){
+        game.initStartScreen();
+        game.init();
+        }
+        document.getElementById('back').onclick = function(){window.history.back()}
     },
     clearScreen: function(){
       let mainScreen = document.querySelector('.game-field');
