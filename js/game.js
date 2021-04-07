@@ -1,8 +1,19 @@
 const game = {
     rows : 12,
     cols : 18,
-
+    life: 5,
+    initStartScreen: function (){
+        let mainScreen = document.querySelector('.game-field');
+          mainScreen.innerHTML = '';
+          mainScreen.insertAdjacentHTML(
+          'beforeend',
+          '<div class="startscreen">\n' +
+          '    <button class="myButton" id="start">start</button>\n' +
+          '</div>'
+      );
+    },
     init: function () {
+        this.clearScreen();
         this.drawBoard();
         this.initKeyPress();
         this. moveInvaders();
@@ -99,14 +110,26 @@ const game = {
     },
     initGameOverScreen: function(){
         game.clearScreen();
+        let mainScreen = document.querySelector('.game-field');
+        mainScreen.insertAdjacentHTML(
+          'beforeend',
+          '<div class="msgbox">\n' +
+          // '    <h3 class="titlemsg">Game over</h3>\n' +
+          // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
+          '    <button class="myButton" id="restart">Restart</button>\n' +
+          '    <button class="myButton" id="back">Back</button>\n' +
+          '</div>'
+        );
+        document.getElementById('restart').onclick = function(){
+            game.initStartScreen();
+            game.init();
+            }
+
     },
     initWinScreen: function(){
         game.clearScreen();
-    },
-    clearScreen: function(){
-      let mainScreen = document.querySelector('.game-field');
-      mainScreen.innerHTML = '';
-      mainScreen.insertAdjacentHTML(
+        let mainScreen = document.querySelector('.game-field');
+        mainScreen.insertAdjacentHTML(
           'beforeend',
           '<div class="msgbox">\n' +
           // '    <h3 class="titlemsg">Game over</h3>\n' +
@@ -116,7 +139,10 @@ const game = {
           '</div>'
       );
 
-
+    },
+    clearScreen: function(){
+      let mainScreen = document.querySelector('.game-field');
+      mainScreen.innerHTML = '';
     },
     moveLeft: function(playerPos){
         if (playerPos.dataset.col !== "0"){
@@ -132,14 +158,14 @@ const game = {
         },
     shoot: function(playerPos){
         let j = playerPos.dataset.col;
-        let i = this.rows-2;
+        let i = this.rows-3;
         let shootStart = setInterval(function(){
             if (i!==0) {
                 let shootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i}"]`);
                 let prevShootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i+1}"]`);
                 shootPos.classList.add('shoot');
                 if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
-                || shootPos.classList.contains("fourth_enemy")){
+                || shootPos.classList.contains("fourth_enemy") || shootPos.classList.contains("bomb")){
                     clearInterval(shootStart);
                     game.clearShootBeams();
                     let enemyClass = shootPos.getAttribute('class').split(" ")[1];
@@ -164,7 +190,16 @@ const game = {
                 beam.classList.remove("shoot")
                 }
     },
-
+    checkIfHit: function(){
+        console.log(this.life)
+        let playerPos = document.querySelector(".player")
+        if (playerPos.classList.contains("bomb")){
+            this.life--;
+            if(this.life<=0){
+                game.initGameOverScreen();
+            }
+        }
+    },
     getRandomBombPos: function () {
         let invaders = document.querySelectorAll('[class*=enemy]')
         let shootersNum = Math.floor(Math.random() * invaders.length/50) // random number of bombs
@@ -193,6 +228,7 @@ const game = {
 
     moveBombs: function () {
         let allBombs = document.querySelectorAll(".bomb")
+        game.checkIfHit();
         for (let bomb of allBombs) {
             let row = parseInt(bomb.dataset.row);
             let shootInvStart = setInterval(function () {
@@ -250,7 +286,11 @@ const game = {
                  lower.classList.add(enemyClass);
                  }
             }
-        }}, 10)
+        }}, 1000)
     },
 }
-game.init();
+game.initStartScreen();
+document.getElementById('start').onclick = function(){
+    game.init();
+}
+
