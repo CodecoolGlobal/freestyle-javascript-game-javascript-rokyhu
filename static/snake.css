@@ -43,7 +43,32 @@ body {
     display: flex;
     flex-direction: column;
     background-color: darkseagreen;
+
 }
+
+.snake-logo-animation {
+    background: url(images/snake.jpeg) no-repeat center center fixed;
+    -webkit-background-size: 540px;
+    -moz-background-size: 540px;
+    -o-background-size: 540px;
+    background-size: 540px;
+    animation: logo-flashing 1s ease-in-out infinite alternate;
+}
+
+@keyframes logo-flashing {
+  0%   {filter: invert(0);}
+  10%  {filter: invert(0);}
+  20%  {filter: invert(0);}
+  30%  {filter: invert(0);}
+  40%  {filter: invert(0);}
+  50%  {filter: invert(0);}
+  60%  {filter: invert(20%);}
+  70%  {filter: invert(40%);}
+  80%  {filter: invert(60%);}
+  90%  {filter: invert(80%);}
+  100% {filter: invert(100%);}
+}
+
 .row{
     display: inherit;
     /*padding: 0 9px 0 9px;*/
