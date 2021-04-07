@@ -40,12 +40,25 @@ body {
     font-family: NokiaFont, sans-serif;
     font-size: 1.2rem;
 }
+
+.score-display {
+    font-family: NokiaFont, sans-serif;
+    font-size: 1.2rem;
+    padding: 9px 9px 0 9px;
+    text-align: center;
+    color: #212f18;
+    position: absolute;
+    bottom: 26px;
+    left: 100px;
+}
+
 .game-container {
     width: 450px;
     height: 300px;
     display: flex;
     flex-direction: column;
     background-color: #9bc428;
+    position: relative;
 }
 
 .snake-intro-animation {

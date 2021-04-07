@@ -139,10 +139,18 @@ window.onload = () => {
                 gameContainer.removeChild(gameContainer.firstChild);
             }
             gameContainer.classList.add('snake-outro-animation');
+            game.DisplayScore(gameContainer)
             gameContainer.addEventListener('click', function() {
                 location.reload()
             });
 
+        },
+
+        DisplayScore: function (board) {
+            board.insertAdjacentHTML(
+                'beforeend',
+                `<div class="score-display"><h1>SCORE: ${game.score}</h1></div>`
+            );
         },
 
         moveSnake: function () {
