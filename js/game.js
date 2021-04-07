@@ -27,14 +27,16 @@ const game = {
             let board = document.querySelector('.game-container');
                 board.insertAdjacentHTML(
                     'afterbegin',
-                    '<div class="board-header"><div class="life">Life: <span id="life">0</span></div>' +
-                    '<div class="score">Score: <span id="score">0</span></div><div>0:00</div></div>'
+                    '<div class="board-header">' +
+                    '<div>Life: <span id="life">0</span></div>' +
+                    '<div>Score: <span id="score">0</span></div>' +
+                    '<div><span id="time">0:00</span></div></div>'
             )}
         },
 
-    changeHeaderData: function (dataClass, newData) {
-        let dataDiv = document.querySelector(`.${dataClass}`)
-        dataDiv.querySelector(`#${dataClass}`).innerHTML = newData
+    changeHeaderData: function (elemID, newData) {
+        let elem = document.querySelector(`#${elemID}`)
+        elem.innerHTML = newData
     },
 
     drawBoard: function () {
