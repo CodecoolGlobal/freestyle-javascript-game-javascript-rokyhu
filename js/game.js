@@ -97,20 +97,24 @@ const game = {
     },
     initGameOverScreen: function(){
         game.clearScreen();
-        // let msg = document.querySelector(".game-msg-field")
-        // let gif = document.createElement("a")
     },
     initWinScreen: function(){
         game.clearScreen();
-        let msg = document.querySelector(".game-msg-field")
-        msg.textContent = "Congratulation! You have won!"
     },
     clearScreen: function(){
       let mainScreen = document.querySelector('.game-field');
       mainScreen.innerHTML = '';
-      let msg = document.createElement('div');
-      msg.classList.add("game-msg-field")
-      mainScreen.appendChild(msg);
+      mainScreen.insertAdjacentHTML(
+          'beforeend',
+          '<div class="msgbox">\n' +
+          // '    <h3 class="titlemsg">Game over</h3>\n' +
+          // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
+          '    <button class="myButton" id="restart">Restart</button>\n' +
+          '    <button class="myButton" id="back">Back</button>\n' +
+          '</div>'
+      );
+
+
     },
     moveLeft: function(playerPos){
         if (playerPos.dataset.col !== "0"){
@@ -201,7 +205,7 @@ const game = {
                  lower.classList.add(enemyClass);
                  }
             }
-        }}, 500)
+        }}, 10)
     },
 }
 game.init();
