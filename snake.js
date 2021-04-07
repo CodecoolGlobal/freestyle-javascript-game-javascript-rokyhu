@@ -44,7 +44,7 @@ const game = {
     createHeader: function (board) {
         board.insertAdjacentHTML(
             'beforeend',
-            '<div class="board-header">This is the header</div>'
+            '<div class="board-header"><div>1120</div><div>0:21</div></div>'
         );
     },
     createGameBoard: function (board){
