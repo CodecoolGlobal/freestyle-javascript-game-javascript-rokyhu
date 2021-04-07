@@ -70,27 +70,57 @@ const game = {
 
     },
     logKey: function(e) {
+        let playerPos = document.querySelector('.player');
             if (e.key==="ArrowLeft"){
-                game.moveLeft();
+                game.moveLeft(playerPos);
             }
             else if (e.key==="ArrowRight"){
-                game.moveRight();
+                game.moveRight(playerPos);
+            }else if (e.key===" "){
+                game.shoot(playerPos);
             }
     },
-    moveLeft: function(){
-        let playerPos = document.querySelector('.player');
+    moveLeft: function(playerPos){
         if (playerPos.dataset.col !== "0"){
             playerPos.previousSibling.classList.add("player");
             playerPos.classList.remove("player");
         }
     },
-    moveRight: function(){
-        let playerPos = document.querySelector('.player');
+    moveRight: function(playerPos){
         if (parseInt(playerPos.dataset.col) !== this.cols-1){
             playerPos.nextSibling.classList.add("player");
             playerPos.classList.remove("player");
             }
         },
+    shoot: function(playerPos){
+        let j = playerPos.dataset.col;
+        let i = this.rows-2;
+        let shootStart = setInterval(function(){
+            if (i!==0) {
+                let shootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i}"]`);
+                let prevShootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i+1}"]`);
+                shootPos.classList.add('shoot');
+                if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
+                || shootPos.classList.contains("fourth_enemy")){
+                    clearInterval(shootStart);
+                    game.clearShootBeams();
+                    let enemyClass = shootPos.getAttribute('class').split(" ")[1];
+                    shootPos.classList.remove(enemyClass)
+                }
+                prevShootPos.classList.remove('shoot');
+                i--;
+            }else{
+                clearInterval(shootStart);
+                game.clearShootBeams();
+            }
+        }, 100);
+    },
+    clearShootBeams: function(){
+        let beams = document.querySelectorAll(".shoot");
+        for (let beam of beams){
+                beam.classList.remove("shoot")
+                }
+    },
 
     moveInvaders: function () {
         let direction = "left";
@@ -112,8 +142,8 @@ const game = {
                 direction = "right";
                 for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
                     let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
-                    let i = enemyDivs[newIndex].getAttribute('data-col');
-                    let j = enemyDivs[newIndex].getAttribute('data-row');
+                    let i = enemyDivs[newIndex].dataset.col;
+                    let j = enemyDivs[newIndex].dataset.row;
                     let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
                     enemyDivs[newIndex].classList.remove(enemyClass);
                     lower.classList.add(enemyClass);
@@ -122,8 +152,8 @@ const game = {
                  direction = "left";
                  for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
                      let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
-                     let i = enemyDivs[newIndex].getAttribute('data-col');
-                     let j = enemyDivs[newIndex].getAttribute('data-row');
+                    let i = enemyDivs[newIndex].dataset.col;
+                    let j = enemyDivs[newIndex].dataset.row;
                  let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
                  enemyDivs[newIndex].classList.remove(enemyClass);
                  lower.classList.add(enemyClass);
@@ -137,5 +167,4 @@ const game = {
 
 
 }
-
 game.init();

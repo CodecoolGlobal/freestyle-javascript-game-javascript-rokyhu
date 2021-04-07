@@ -64,3 +64,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
 }
+.shoot{
+    background-color: red;
+}
