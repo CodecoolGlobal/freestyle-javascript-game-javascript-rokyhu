@@ -27,42 +27,28 @@ const game = {
             let board = document.querySelector('.game-container');
                 board.insertAdjacentHTML(
                     'afterbegin',
-                    '<div class="board-header"><div class="score">0</div><div>0:21</div></div>'
+                    '<div class="board-header"><div class="life">Life: <span id="life">0</span></div>' +
+                    '<div class="score">Score: <span id="score">0</span></div><div>0:00</div></div>'
             )}
         },
+
+    changeHeaderData: function (dataClass, newData) {
+        let dataDiv = document.querySelector(`.${dataClass}`)
+        dataDiv.querySelector(`#${dataClass}`).innerHTML = newData
+    },
+
     drawBoard: function () {
         let gameField = document.querySelector(".game-field");
         let cellIndex = 0;
         const sprite = {
             '189': 'player',
-            '20':"first_enemy",
-            '22':"first_enemy",
-            '24':"first_enemy",
-            '26':"first_enemy",
-            '28':"first_enemy",
-            '30':"first_enemy",
-            '32':"first_enemy",
-            '39':"second_enemy",
-            '41':"second_enemy",
-            '43':"second_enemy",
-            '45':"second_enemy",
-            '47':"second_enemy",
-            '49':"second_enemy",
-            '51':"second_enemy",
-            '56':"third_enemy",
-            '58':"third_enemy",
-            '60':"third_enemy",
-            '62':"third_enemy",
-            '64':"third_enemy",
-            '66':"third_enemy",
-            '68':"third_enemy",
-            '75':"fourth_enemy",
-            '77':"fourth_enemy",
-            '79':"fourth_enemy",
-            '81':"fourth_enemy",
-            '83':"fourth_enemy",
-            '85':"fourth_enemy",
-            '87':"fourth_enemy",
+            '20':"first_enemy", '22':"first_enemy", '24':"first_enemy", '26':"first_enemy",
+            '28':"first_enemy", '30':"first_enemy", '32':"first_enemy", '39':"second_enemy",
+            '41':"second_enemy", '43':"second_enemy", '45':"second_enemy", '47':"second_enemy",
+            '49':"second_enemy", '51':"second_enemy", '56':"third_enemy", '58':"third_enemy",
+            '60':"third_enemy", '62':"third_enemy", '64':"third_enemy", '66':"third_enemy",
+            '68':"third_enemy", '75':"fourth_enemy", '77':"fourth_enemy", '79':"fourth_enemy",
+            '81':"fourth_enemy", '83':"fourth_enemy", '85':"fourth_enemy", '87':"fourth_enemy",
         }
         for (let row = 0; row < this.rows; row++) {
             const rowElement = this.addRow(gameField);
@@ -305,7 +291,7 @@ const game = {
 
             }
 
-        }, 800)
+        }, 1000)
     },
 }
 game.initStartScreen();
