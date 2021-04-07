@@ -6,6 +6,8 @@ const game = {
         this.drawBoard();
         this.initKeyPress();
         this. moveInvaders();
+        this.initInvadersShoot();
+
     },
     drawBoard: function () {
         let gameField = document.querySelector(".game-field");
@@ -162,6 +164,49 @@ const game = {
                 beam.classList.remove("shoot")
                 }
     },
+
+    getRandomBombPos: function () {
+        let invaders = document.querySelectorAll('[class*=enemy]')
+        let shootersNum = Math.floor(Math.random() * invaders.length/50) // random number of bombs
+        let bombPos = new Set()
+        for (let index = 0; index <= shootersNum; index++) { // random positions from where bombs will be sent
+            let randomInvader = invaders[Math.floor(Math.random() * (invaders.length-1))]
+            if (randomInvader !== undefined){
+                let i = randomInvader.dataset.row
+                let j = randomInvader.dataset.col
+            bombPos.add(document.querySelector(`.field[data-col="${j}"][data-row="${parseInt(i)+1}"]`))
+        }}
+        return bombPos;
+    },
+
+    initInvadersShoot: function  () {
+        setInterval(function(){
+            let startPos = game.getRandomBombPos()
+            for (let position of startPos) {
+                 let i = parseInt(position.dataset.row);
+                 if (i !== game.rows-3) {
+                     position.classList.add('bomb');}
+        }
+        game.moveBombs()
+        }, 1000)
+    },
+
+    moveBombs: function () {
+        let allBombs = document.querySelectorAll(".bomb")
+        for (let bomb of allBombs) {
+            let row = parseInt(bomb.dataset.row);
+            let shootInvStart = setInterval(function () {
+                if (row < 10) {
+                    let nextShootPos = document.querySelector(`.field[data-col="${bomb.dataset.col}"][data-row="${parseInt(bomb.dataset.row) + 1}"]`);
+                    nextShootPos.classList.add('bomb');
+                } else {
+                    clearInterval(shootInvStart);
+                    bomb.classList.remove('bomb');
+                }
+                bomb.classList.remove('bomb');
+                row++;
+            }, 100);
+        }},
 
     moveInvaders: function () {
         let direction = "left";

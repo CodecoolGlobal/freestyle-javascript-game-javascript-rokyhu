@@ -67,6 +67,10 @@ body {
 .shoot{
     background-color: red;
 }
+
+.bomb {
+    background-color: aqua;
+}
 .msgbox{
     width: 450px;
     height: 300px;
