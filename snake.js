@@ -25,7 +25,7 @@ window.onload = () => {
 
         createBoard: function(){
             let board = document.querySelector('.game-container');
-            board.classList.remove('snake-logo-animation')
+            board.classList.remove('snake-intro-animation')
             this.createHeader(board);
             this.createGameBoard(board);
             let gameField = document.querySelector('.game-board');
@@ -120,7 +120,15 @@ window.onload = () => {
 
         gameOver: function () {
             clearInterval(game.snakeMoveInterval);
-            alert('Game Over')
+            let gameContainer = document.querySelector('.game-container')
+            while (gameContainer.firstChild) {
+                gameContainer.removeChild(gameContainer.firstChild);
+            }
+            gameContainer.classList.add('snake-outro-animation');
+            gameContainer.addEventListener('click', function() {
+                location.reload()
+            });
+
         },
 
         moveSnake: function () {

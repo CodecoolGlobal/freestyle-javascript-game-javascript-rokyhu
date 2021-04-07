@@ -48,17 +48,17 @@ body {
     background-color: #9bc428;
 }
 
-.snake-logo-animation {
+.snake-intro-animation {
     background: url(images/snake-intro.jpeg) no-repeat center center fixed;
     -webkit-background-size: 540px;
     -moz-background-size: 540px;
     -o-background-size: 540px;
     background-size: 540px;
-    animation: logo-flashing 1s ease-in-out infinite alternate;
+    animation: intro-flashing 1s ease-in-out infinite alternate;
     cursor: pointer;
 }
 
-@keyframes logo-flashing {
+@keyframes intro-flashing {
   0%   {filter: invert(0);}
   10%  {filter: invert(0);}
   20%  {filter: invert(0);}
@@ -71,6 +71,28 @@ body {
   90%  {filter: invert(75%);}
   100% {filter: invert(100%);}
 }
+
+.snake-outro-animation {
+    animation: outro-flashing 0.5s ease-in-out infinite alternate;
+    cursor: pointer;
+}
+
+@keyframes outro-flashing {
+  0%   {background: url(images/snake-outro-2.jpg) no-repeat center center fixed;
+        -webkit-background-size: 540px;
+        -moz-background-size: 540px;
+        -o-background-size: 540px;
+        background-size: 540px;
+        animation: outro-flashing 1s ease-in-out infinite alternate;
+        cursor: pointer;}
+  100% {background: url(images/snake-outro-1.jpg) no-repeat center center fixed;
+        -webkit-background-size: 540px;
+        -moz-background-size: 540px;
+        -o-background-size: 540px;
+        background-size: 540px;
+        animation: outro-flashing 1s ease-in-out infinite alternate;
+        cursor: pointer;}
+  }
 
 .row{
     display: inherit;
