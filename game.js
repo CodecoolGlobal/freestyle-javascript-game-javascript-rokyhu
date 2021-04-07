@@ -21,7 +21,7 @@ window.onload = () => {
                 if (selectedGame.classList.contains('snake')) {
                     window.location.href = '/snake.html';
                 } else {
-                    window.location.href = '/space-invader.html';
+                    window.location.href = '/space_invader.html';
                 }
             }
         },
