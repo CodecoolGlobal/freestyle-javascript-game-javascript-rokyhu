@@ -4,6 +4,8 @@ window.onload = () => {
         direction: [0, -1], // default left dir
         snakeElements: [],
         snakeMoveInterval: {},
+        powerupLocation: [0, 0],
+        score: 0,
 
         initGame: function () {
             let gameContainer = document.querySelector('.game-container')
@@ -11,8 +13,9 @@ window.onload = () => {
 
             function initGameFunction() {
                 game.createBoard();
-                game.snakeElements = [[4, 7], [4, 8], [4, 9], [4, 10], [4, 11], [4, 12], [5, 12], [6, 12], [7, 12],];
+                game.snakeElements = [[4, 13], [4, 14], [4, 15],];
                 game.drawBoard();
+                game.spawnPowerup();
                 game.initKeypress();
                 game.snakeMove();
                 gameContainer.removeEventListener('click', initGameFunction);
@@ -33,6 +36,30 @@ window.onload = () => {
                 }
             }
         },
+
+        getRandomNum: function (max_value){
+            return Math.floor(Math.random() * max_value);
+        },
+        spawnPowerup: function () {
+            let targetField;
+            let row_idx;
+            let col_idx;
+            do {
+                let row = this.getRandomNum(9);
+                let col = this.getRandomNum(17);
+                row_idx = row;
+                col_idx = col;
+                targetField = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
+            } while (targetField.classList.contains('snake') !== false);
+            targetField.textContent = '*';
+            game.powerupLocation = [row_idx, col_idx];
+        },
+        isHeadOnPowerupField: function (head){
+            let food = game.powerupLocation;
+            return head[0] === food[0] && head[1] === food[1];
+        },
+
+
         addRow: function (board) {
             board.insertAdjacentHTML(
                 'beforeend',
@@ -47,12 +74,14 @@ window.onload = () => {
                             data-row="${row_idx}"
                             data-col="${col_idx}">.</div>`);
         },
+
         createHeader: function (board) {
             board.insertAdjacentHTML(
                 'beforeend',
-                '<div class="board-header"><div>1120</div><div>0:21</div></div>'
+                '<div class="board-header"><div class="score">0</div><div>0:21</div></div>'
             );
         },
+
         createGameBoard: function (board){
             board.insertAdjacentHTML(
                 'beforeend',
@@ -98,26 +127,34 @@ window.onload = () => {
             let currentDir = game.direction;
             let newSnakeHeadIndex = [parseInt(`${game.snakeElements[0][0]+currentDir[0]}`), parseInt(`${game.snakeElements[0][1]+currentDir[1]}`)];
             if (game.isNewSnakeHeadInSnake(newSnakeHeadIndex)) {
-                game.gameOver();
-            } else {
-                game.snakeElements.splice(0, 0, newSnakeHeadIndex);
-            }
+                    game.gameOver();
+                } else {
+                    game.snakeElements.splice(0, 0, newSnakeHeadIndex);
+                }
             game.updateBoard()
-            game.snakeElements.pop();
+            if(this.isHeadOnPowerupField(newSnakeHeadIndex)){
+                this.score++;
+                document.querySelector('.score').textContent++;
+                let food = document.querySelector(`[data-row="${game.powerupLocation[0]}"][data-col="${game.powerupLocation[1]}"]`);
+                food.textContent = ".";
+                this.spawnPowerup()
+            } else {
+                game.snakeElements.pop();
+            }
         },
 
         isNewSnakeHeadInSnake: function(newSnakeHeadIndex) {
-            for (let elem of game.snakeElements) {
-                if (elem.toString() === newSnakeHeadIndex.toString()) {
-                    return true
+                for (let elem of game.snakeElements) {
+                    if (elem.toString() === newSnakeHeadIndex.toString()) {
+                        return true
+                    }
                 }
-            }
-            return false
-        },
+                return false
+            },
 
         snakeMove: function () {
-            game.snakeMoveInterval =  setInterval(function () {
-                game.moveSnake(game.snakeElements)
+            game.snakeMoveInterval = setInterval(function () {
+                game.moveSnake()
             },
             300)
         }
