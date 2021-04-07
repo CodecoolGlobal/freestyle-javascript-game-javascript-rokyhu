@@ -14,6 +14,7 @@ const game = {
           '</div>'
       );
     },
+
     init: function () {
         this.clearScreen();
         this.createHeader();
@@ -34,7 +35,7 @@ const game = {
                     '<div>Score: <span id="score">0</span></div>' +
                     '<div><span id="time">0:00</span></div></div>'
             )}
-        },
+    },
 
     changeHeaderData: function (elemID, newData) {
         let elem = document.querySelector(`#${elemID}`)
@@ -63,6 +64,7 @@ const game = {
             }
         }
     },
+
     addRow: function (gameField) {
         gameField.insertAdjacentHTML(
             'beforeend',
@@ -70,6 +72,7 @@ const game = {
         );
         return gameField.lastElementChild;
     },
+
     addCell: function (rowElement, row, col, className, cellIndex) {
         rowElement.insertAdjacentHTML(
             'beforeend',
@@ -78,10 +81,11 @@ const game = {
                         data-row="${row}"
                         data-col="${col}"></div>`);
     },
+
     initKeyPress: function(){
         document.addEventListener('keydown', this.logKey);
-
     },
+
     logKey: function(e) {
         let playerPos = document.querySelector('.player');
             if (e.key==="ArrowLeft"){
@@ -94,12 +98,14 @@ const game = {
 
             }
     },
+
     checkIfWon: function(){
       let enemies = document.querySelectorAll('[class*=enemy]');
       if(enemies.length===0){
           return true;
       }
     },
+
     checkIfGameOver: function(){
       let enemies = document.querySelectorAll('[class*=enemy]');
       for (let enemy of enemies){
@@ -108,6 +114,7 @@ const game = {
           }
       }
     },
+
     initGameOverScreen: function(){
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
@@ -126,6 +133,7 @@ const game = {
             }
         document.getElementById('back').onclick = function(){window.history.back()}
     },
+
     initWinScreen: function(){
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
@@ -144,22 +152,26 @@ const game = {
         }
         document.getElementById('back').onclick = function(){window.history.back()}
     },
+
     clearScreen: function(){
       let mainScreen = document.querySelector('.game-field');
       mainScreen.innerHTML = '';
     },
+
     moveLeft: function(playerPos){
         if (playerPos.dataset.col !== "0"){
             playerPos.previousSibling.classList.add("player");
             playerPos.classList.remove("player");
         }
     },
-    moveRight: function(playerPos){ 
+
+    moveRight: function(playerPos){
         if (parseInt(playerPos.dataset.col) !== this.cols-1){
             playerPos.nextSibling.classList.add("player");
             playerPos.classList.remove("player");
             }
         },
+
     shoot: function(playerPos){
         let j = playerPos.dataset.col;
         let i = this.rows-3;
@@ -191,12 +203,14 @@ const game = {
             }
         }, 100);
     },
+
     clearShootBeams: function(){
         let beams = document.querySelectorAll(".shoot");
         for (let beam of beams){
                 beam.classList.remove("shoot")
                 }
     },
+
     checkIfHit: function(){
         let playerPos = document.querySelector(".player")
         if (playerPos.classList.contains("bomb")){
@@ -243,11 +257,12 @@ const game = {
     moveBombs: function () {
         let allBombs = document.querySelectorAll(".bomb")
         if (allBombs.length > 0){
-        game.checkIfHit();}
+            game.checkIfHit();
+        }
         for (let bomb of allBombs) {
             let row = parseInt(bomb.dataset.row);
             let shootInvStart = setInterval(function () {
-                if (row < 10) {
+                if (row < game.rows-2) {
                     let nextShootPos = document.querySelector(`.field[data-col="${bomb.dataset.col}"][data-row="${parseInt(bomb.dataset.row) + 1}"]`);
                     if (nextShootPos !== null) {
                     nextShootPos.classList.add('bomb');} //TODO why is value null?
@@ -275,12 +290,12 @@ const game = {
     moveInvaders: function () {
         let direction = "left";
         let enemyMoveInterval = setInterval(function () {
-            let isGameOver = game.checkIfGameOver();
-            if (isGameOver){
+        let isGameOver = game.checkIfGameOver();
+        if (isGameOver){
                 clearInterval(enemyMoveInterval)
                 game.initGameOverScreen();
-            }
-            let enemyDivs = document.querySelectorAll('[class*=enemy]')
+        }
+        let enemyDivs = document.querySelectorAll('[class*=enemy]')
         let enemyColumns = [...enemyDivs].map(item => {
             return item.dataset.col; })
 
@@ -291,22 +306,22 @@ const game = {
                 enemyDivs[index].previousSibling.classList.add(enemyClass);
                 enemyDivs[index].classList.remove(enemyClass);
             }
-            if (direction === "right" && !enemyColumns.includes('17')) {
+            if (direction === "right" && !enemyColumns.includes(`${game.cols-1}`)) {
                 enemyDivs[index].nextSibling.classList.add(enemyClass);
                 enemyDivs[index].classList.remove(enemyClass);
             }
             if (enemyColumns.includes('0') && direction === "left") {
                 direction = "right";
                 game.moveDown(enemyDivs)}
-            else if (enemyColumns.includes('17') && direction === "right") {
-                 direction = "left";
+            else if (enemyColumns.includes(`${game.cols-1}`) && direction === "right") {
+                direction = "left";
                 game.moveDown(enemyDivs)}
-
             }
-
         }, 1000)
     },
 }
+
+
 game.initStartScreen();
 document.getElementById('start').onclick = function(){
     game.init();
