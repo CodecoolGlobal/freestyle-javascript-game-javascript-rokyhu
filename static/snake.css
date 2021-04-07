@@ -33,8 +33,8 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    color: #8fbc8f;
-    background-color: #475947;
+    color: #9bc428  ;
+    background-color: #2d4307;
     padding: 9px 9px 0 9px;
     flex-grow: 1;
     font-family: NokiaFont, sans-serif;
@@ -45,17 +45,17 @@ body {
     height: 300px;
     display: flex;
     flex-direction: column;
-    background-color: darkseagreen;
-
+    background-color: #9bc428;
 }
 
 .snake-logo-animation {
-    background: url(images/snake.jpeg) no-repeat center center fixed;
+    background: url(images/snake-intro.jpeg) no-repeat center center fixed;
     -webkit-background-size: 540px;
     -moz-background-size: 540px;
     -o-background-size: 540px;
     background-size: 540px;
     animation: logo-flashing 1s ease-in-out infinite alternate;
+    cursor: pointer;
 }
 
 @keyframes logo-flashing {
@@ -80,15 +80,32 @@ body {
     width: 24px;
     height: 24px;
     text-align: center;
+    background: url('/static/images/snake-empty.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
 }
 .game-board{
     display: inherit;
     flex-direction: column;
     /*padding: 0 9px 0 9px;*/
-    border: 9px solid #475947;
+    border: 9px solid #2d4307;
 }
-.snake,
-.snake-tail,
-.snake-head{
-    background-color: yellow;
+.snake {
+    /*background-color: #2d4307;*/
+    background: url('/static/images/snake-pixel.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
+}
+
+.snake-food {
+    /*background-color: yellow;*/
+    background: url('/static/images/snake-food.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
 }

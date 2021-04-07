@@ -51,7 +51,7 @@ window.onload = () => {
                 col_idx = col;
                 targetField = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
             } while (targetField.classList.contains('snake') !== false);
-            targetField.textContent = '*';
+            targetField.classList.add('snake-food')
             game.powerupLocation = [row_idx, col_idx];
         },
         isHeadOnPowerupField: function (head){
@@ -72,7 +72,7 @@ window.onload = () => {
                 'beforeend',
                 `<div class="board-field"
                             data-row="${row_idx}"
-                            data-col="${col_idx}">.</div>`);
+                            data-col="${col_idx}"></div>`);
         },
 
         createHeader: function (board) {
@@ -136,7 +136,7 @@ window.onload = () => {
                 this.score++;
                 document.querySelector('.score').textContent++;
                 let food = document.querySelector(`[data-row="${game.powerupLocation[0]}"][data-col="${game.powerupLocation[1]}"]`);
-                food.textContent = ".";
+                food.classList.remove('snake-food')
                 this.spawnPowerup()
             } else {
                 game.snakeElements.pop();
