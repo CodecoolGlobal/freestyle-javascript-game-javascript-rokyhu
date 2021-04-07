@@ -10,10 +10,12 @@ window.onload = () => {
             }
             startGame.addEventListener("click", handleGameStart );
 
-            function handleGameOptions() {
-                 for (let game of gameOptions) {
-                    game.classList.toggle('selected')
-                 }
+            function handleGameOptions(event) {
+                if (!event.target.classList.contains('selected')) {
+                    for (let game of gameOptions) {
+                        game.classList.toggle('selected')
+                    }
+                }
             }
 
             function handleGameStart() {

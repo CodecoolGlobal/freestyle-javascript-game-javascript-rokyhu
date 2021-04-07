@@ -23,11 +23,11 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-1200px.png) no-repeat center center fixed;
-    -webkit-background-size: 1200px;
-    -moz-background-size: 1200px;
-    -o-background-size: 1200px;
-    background-size: 1200px;
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    -webkit-background-size: 1000px;
+    -moz-background-size: 1000px;
+    -o-background-size: 1000px;
+    background-size: 1000px;
 
 }
 

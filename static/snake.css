@@ -22,11 +22,11 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-1200px.png) no-repeat center center fixed;
-    -webkit-background-size: 1200px;
-    -moz-background-size: 1200px;
-    -o-background-size: 1200px;
-    background-size: 1200px;
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    -webkit-background-size: 1000px;
+    -moz-background-size: 1000px;
+    -o-background-size: 1000px;
+    background-size: 1000px;
 
 }
 .board-header{
@@ -195,3 +195,11 @@ body {
         background-size: 24px;
         animation: food-flashing 1s ease-in-out infinite alternate;}
   }
+
+.back-button {
+    position: absolute;
+    left: 6vw;
+    bottom: 6vh;
+    width: 50px;
+    height: 50px;
+}
