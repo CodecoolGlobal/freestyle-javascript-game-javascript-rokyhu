@@ -1,7 +1,8 @@
 const game = {
     rows : 12,
     cols : 18,
-    life: 5,
+    life: 3,
+    score: 0,
 
     initStartScreen: function (){
         let mainScreen = document.querySelector('.game-field');
@@ -25,10 +26,11 @@ const game = {
     createHeader: function () {
         if (! document.querySelector(".board-header")) {
             let board = document.querySelector('.game-container');
+            //TODO can we put below life and score variables?
                 board.insertAdjacentHTML(
                     'afterbegin',
                     '<div class="board-header">' +
-                    '<div>Life: <span id="life">0</span></div>' +
+                    '<div>Life: <span id="life">3</span></div>' +
                     '<div>Score: <span id="score">0</span></div>' +
                     '<div><span id="time">0:00</span></div></div>'
             )}
@@ -152,7 +154,7 @@ const game = {
             playerPos.classList.remove("player");
         }
     },
-    moveRight: function(playerPos){
+    moveRight: function(playerPos){ 
         if (parseInt(playerPos.dataset.col) !== this.cols-1){
             playerPos.nextSibling.classList.add("player");
             playerPos.classList.remove("player");
@@ -167,12 +169,14 @@ const game = {
                 let prevShootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i+1}"]`);
                 if (shootPos !== null && prevShootPos !== null) {
                     shootPos.classList.add('shoot'); //TODO why is value null?
+                    // TODO can we change below statement to regex?
                     if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
                     || shootPos.classList.contains("fourth_enemy") || shootPos.classList.contains("bomb")){
                         clearInterval(shootStart);
                         game.clearShootBeams();
                         let enemyClass = shootPos.getAttribute('class').split(" ")[1];
                         shootPos.classList.remove(enemyClass);
+                        game.increaseScore();
                         let gameStatus = game.checkIfWon();
                         if (gameStatus) {
                             clearInterval(shootStart);
@@ -194,15 +198,22 @@ const game = {
                 }
     },
     checkIfHit: function(){
-        console.log(this.life)
         let playerPos = document.querySelector(".player")
         if (playerPos.classList.contains("bomb")){
             this.life--;
+            game.changeHeaderData("life", this.life)
             if(this.life<=0){
+                game.changeHeaderData("life", this.life)
                 game.initGameOverScreen();
             }
         }
     },
+
+    increaseScore: function () {
+        game.score += 10;
+        game.changeHeaderData("score", game.score);
+    },
+
     getRandomBombPos: function () {
         let invaders = document.querySelectorAll('[class*=enemy]')
         let shootersNum = Math.floor(Math.random() * invaders.length/50) // random number of bombs
