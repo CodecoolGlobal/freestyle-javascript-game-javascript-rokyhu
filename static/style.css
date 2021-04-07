@@ -5,7 +5,11 @@ src: url("fonts/nokia-font.ttf");
 
 body {
     margin: 0;
-    background-image: url("images/arcade-wallpaper.jpg");
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 
 }
 
@@ -19,11 +23,11 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-900px.png) no-repeat center center fixed;
-    -webkit-background-size: 900px;
-    -moz-background-size: 900px;
-    -o-background-size: 900px;
-    background-size: 900px;
+    background: url(images/Arcade-Classics-frame-1200px.png) no-repeat center center fixed;
+    -webkit-background-size: 1200px;
+    -moz-background-size: 1200px;
+    -o-background-size: 1200px;
+    background-size: 1200px;
 
 }
 
