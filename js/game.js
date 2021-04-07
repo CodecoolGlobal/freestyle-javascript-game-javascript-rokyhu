@@ -98,6 +98,7 @@ const game = {
                     clearInterval(shootStart);
                     console.log("Hit")
                     game.clearShootBeams();
+                    shootPos.classList.remove("enemy")
                 }
                 prevShootPos.classList.remove('shoot');
                 i--;
@@ -115,5 +116,4 @@ const game = {
                 }
     }
 }
-
 game.init();
