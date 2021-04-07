@@ -67,3 +67,7 @@ body {
 .shoot{
     background-color: red;
 }
+
+.bomb {
+    background-color: aqua;
+}
