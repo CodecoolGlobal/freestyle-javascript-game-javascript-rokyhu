@@ -12,6 +12,8 @@ document.addEventListener("keydown", function (event){
 
 const game = {
     direction: [0, -1], // default left dir
+    powerupLocation: [0, 0],
+    score: 0,
 
     createBoard: function(){
         let board = document.querySelector('.game-container');
@@ -24,6 +26,27 @@ const game = {
                 this.addCol(newRow, row_idx, col_idx);
             }
         }
+    },
+    getRandomNum: function (max_value){
+        return Math.floor(Math.random() * max_value);
+    },
+    spawnPowerup: function () {
+        let targetField;
+        let row_idx;
+        let col_idx;
+        do {
+            let row = this.getRandomNum(9);
+            let col = this.getRandomNum(17);
+            row_idx = row;
+            col_idx = col;
+            targetField = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
+        } while (targetField.classList.contains('snake') !== false);
+        targetField.textContent = '*';
+        game.powerupLocation = [row_idx, col_idx];
+    },
+    isHeadOnPowerupField: function (head){
+        let food = game.powerupLocation;
+        return head[0] === food[0] && head[1] === food[1];
     },
     addRow: function (board) {
         board.insertAdjacentHTML(
@@ -42,7 +65,7 @@ const game = {
     createHeader: function (board) {
         board.insertAdjacentHTML(
             'beforeend',
-            '<div class="board-header"><div>1120</div><div>0:21</div></div>'
+            '<div class="board-header"><div class="score">0</div><div>0:21</div></div>'
         );
     },
     createGameBoard: function (board){
@@ -73,7 +96,15 @@ const game = {
         let newSnakeHeadIndex = [parseInt(`${snakeElements[0][0]+currentDir[0]}`), parseInt(`${snakeElements[0][1]+currentDir[1]}`)];
         snakeElements.splice(0, 0, newSnakeHeadIndex);
         game.updateBoard(snakeElements)
-        snakeElements.pop();
+        if(this.isHeadOnPowerupField(newSnakeHeadIndex)){
+            this.score++;
+            document.querySelector('.score').textContent++;
+            let food = document.querySelector(`[data-row="${game.powerupLocation[0]}"][data-col="${game.powerupLocation[1]}"]`);
+            food.textContent = ".";
+            this.spawnPowerup()
+        } else {
+            snakeElements.pop();
+        }
     },
 
     snakeMove: function () {
@@ -88,5 +119,6 @@ const game = {
 game.createBoard()
 let snakeElements = [[4, 7], [4, 8], [4, 9], [4, 10], [4, 11], [4, 12], [5, 12], [6, 12], [7, 12],]
 game.drawBoard(snakeElements);
+game.spawnPowerup();
 snakeMoveInterval = game.snakeMove()
 
