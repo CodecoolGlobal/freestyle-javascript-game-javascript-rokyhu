@@ -90,7 +90,8 @@ window.onload = () => {
         },
 
         drawBoard: function () {
-            for (let elem of game.snakeElements) {
+            document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-left')
+            for (let elem of game.snakeElements.slice(1, game.snakeElements.length-1)) {
                 document.querySelector(`[data-row="${elem[0]}"][data-col="${elem[1]}"]`).classList.add('snake')
             }
         },
@@ -109,13 +110,26 @@ window.onload = () => {
             });
         },
 
-        updateBoard: function () {
+        updateBoard: function (currentDir) {
             try {
-                document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake')
-                document.querySelector(`[data-row="${game.snakeElements[game.snakeElements.length - 1][0]}"][data-col="${game.snakeElements[game.snakeElements.length - 1][1]}"]`).classList.remove('snake')
+                if (currentDir.toString() === [-1, 0].toString()) {  // up
+                    document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-up')
+                } else if (currentDir.toString() === [1, 0].toString()) {  // down
+                    document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-down')
+                } else if (currentDir.toString() === [0, -1].toString()) {  // left
+                    document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-left')
+                } else if (currentDir.toString() === [0, 1].toString()) {  // right
+                    document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-right')
+                }
             } catch {  // this is when snake goes off the board
                 game.gameOver()
             }
+            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-up')
+            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-down')
+            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-left')
+            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-right')
+            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.add('snake')
+            document.querySelector(`[data-row="${game.snakeElements[game.snakeElements.length - 1][0]}"][data-col="${game.snakeElements[game.snakeElements.length - 1][1]}"]`).classList.remove('snake')
         },
 
         gameOver: function () {
@@ -139,7 +153,7 @@ window.onload = () => {
                 } else {
                     game.snakeElements.splice(0, 0, newSnakeHeadIndex);
                 }
-            game.updateBoard()
+            game.updateBoard(currentDir)
             if(this.isHeadOnPowerupField(newSnakeHeadIndex)){
                 this.score++;
                 document.querySelector('.score').textContent++;
