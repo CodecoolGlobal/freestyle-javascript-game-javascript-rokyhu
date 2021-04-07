@@ -60,9 +60,13 @@ const game = {
     },
 
     updateBoard: function (snakeElements) {
-        document.querySelector(`[data-row="${snakeElements[0][0]}"][data-col="${snakeElements[0][1]}"]`).classList.add('snake')
-        document.querySelector(`[data-row="${snakeElements[snakeElements.length - 1][0]}"][data-col="${snakeElements[snakeElements.length - 1][1]}"]`).classList.remove('snake')
-
+        try {
+            document.querySelector(`[data-row="${snakeElements[0][0]}"][data-col="${snakeElements[0][1]}"]`).classList.add('snake')
+            document.querySelector(`[data-row="${snakeElements[snakeElements.length - 1][0]}"][data-col="${snakeElements[snakeElements.length - 1][1]}"]`).classList.remove('snake')
+        } catch {
+            clearInterval(snakeMoveInterval);
+            alert('Game Over')
+        }
     },
 
     moveSnake: function (snakeElements) {
@@ -82,6 +86,14 @@ const game = {
         game.updateBoard(snakeElements)
         snakeElements.pop();
     },
+
+    snakeMove: function () {
+        return setInterval(function () {
+            game.moveSnake(snakeElements)
+        },
+        1000)
+    }
+
 
     // rightMovementLogic: function (){
     //     let snakeHead = document.querySelector('.snake-head');
@@ -115,10 +127,6 @@ const game = {
 game.createBoard()
 let snakeElements = [[4, 7], [4, 8], [4, 9], [4, 10], [4, 11], [4, 12], [5, 12], [6, 12], [7, 12],]
 game.drawBoard(snakeElements);
-let snakeMove = setInterval( function() {
-    game.moveSnake(snakeElements)
-    },
-    1000);
-
+snakeMoveInterval = game.snakeMove()
 // game.snakeMovement()
 
