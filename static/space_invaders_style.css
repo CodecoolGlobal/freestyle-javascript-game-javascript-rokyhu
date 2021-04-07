@@ -67,3 +67,11 @@ body {
 .shoot{
     background-color: red;
 }
+.game-msg-field{
+    width: 450px;
+    height: 300px;
+    background-image: url('/static/images/gameover.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}

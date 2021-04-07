@@ -78,7 +78,39 @@ const game = {
                 game.moveRight(playerPos);
             }else if (e.key===" "){
                 game.shoot(playerPos);
+
             }
+    },
+    checkIfWon: function(){
+      let enemies = document.querySelectorAll('[class*=enemy]');
+      if(enemies.length===0){
+          return true;
+      }
+    },
+    checkIfGameOver: function(){
+      let enemies = document.querySelectorAll('[class*=enemy]');
+      for (let enemy of enemies){
+          if (enemy.dataset.row == this.rows-2){
+              return true;
+          }
+      }
+    },
+    initGameOverScreen: function(){
+        game.clearScreen();
+        // let msg = document.querySelector(".game-msg-field")
+        // let gif = document.createElement("a")
+    },
+    initWinScreen: function(){
+        game.clearScreen();
+        let msg = document.querySelector(".game-msg-field")
+        msg.textContent = "Congratulation! You have won!"
+    },
+    clearScreen: function(){
+      let mainScreen = document.querySelector('.game-field');
+      mainScreen.innerHTML = '';
+      let msg = document.createElement('div');
+      msg.classList.add("game-msg-field")
+      mainScreen.appendChild(msg);
     },
     moveLeft: function(playerPos){
         if (playerPos.dataset.col !== "0"){
@@ -105,8 +137,13 @@ const game = {
                     clearInterval(shootStart);
                     game.clearShootBeams();
                     let enemyClass = shootPos.getAttribute('class').split(" ")[1];
-                    shootPos.classList.remove(enemyClass)
-                }
+                    shootPos.classList.remove(enemyClass);
+                    let gameStatus = game.checkIfWon();
+                    if (gameStatus) {
+                        clearInterval(shootStart);
+                        game.initWinScreen()
+                        }
+                    }
                 prevShootPos.classList.remove('shoot');
                 i--;
             }else{
@@ -124,7 +161,12 @@ const game = {
 
     moveInvaders: function () {
         let direction = "left";
-        setInterval(function () {
+        let enemyMoveInterval = setInterval(function () {
+            let isGameOver = game.checkIfGameOver();
+            if (isGameOver){
+                clearInterval(enemyMoveInterval)
+                game.initGameOverScreen();
+            }
             let enemyDivs = document.querySelectorAll('[class*=enemy]')
         let enemyColumns = [...enemyDivs].map(item => {
             return item.dataset.col; })
@@ -148,7 +190,7 @@ const game = {
                     enemyDivs[newIndex].classList.remove(enemyClass);
                     lower.classList.add(enemyClass);
                 }}
-             if (enemyColumns.includes('17') && direction === "right") {
+            if (enemyColumns.includes('17') && direction === "right") {
                  direction = "left";
                  for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
                      let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
@@ -158,13 +200,8 @@ const game = {
                  enemyDivs[newIndex].classList.remove(enemyClass);
                  lower.classList.add(enemyClass);
                  }
-             }
-
-        }}, 1500)
-
+            }
+        }}, 500)
     },
-
-
-
 }
 game.init();
