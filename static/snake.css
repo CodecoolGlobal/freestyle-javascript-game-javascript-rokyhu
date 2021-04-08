@@ -115,7 +115,7 @@ body {
     width: 24px;
     height: 24px;
     text-align: center;
-    background: url('/static/images/snake-empty.png') no-repeat center center;
+    background: url('../static/images/snake-empty.png') no-repeat center center;
     -webkit-background-size: 24px;
     -moz-background-size: 24px;
     -o-background-size: 24px;
@@ -128,7 +128,7 @@ body {
     border: 9px solid #2d4307;
 }
 .snake {
-    background: url('/static/images/snake-pixel-4.png') no-repeat center center;
+    background: url('../static/images/snake-pixel-4.png') no-repeat center center;
     -webkit-background-size: 24px;
     -moz-background-size: 24px;
     -o-background-size: 24px;
@@ -136,7 +136,7 @@ body {
 }
 
 .snake-head-up, .snake-head-down, .snake-head-left, .snake-head-right {
-    background: url('/static/images/snake-head-2.png') no-repeat center center;
+    background: url('../static/images/snake-head-2.png') no-repeat center center;
     -webkit-background-size: 24px;
     -moz-background-size: 24px;
     -o-background-size: 24px;
@@ -181,14 +181,14 @@ body {
 }
 
 @keyframes food-flashing {
-  0%   {background: url('/static/images/snake-food.png') no-repeat center center;
+  0%   {background: url('../static/images/snake-food.png') no-repeat center center;
         -webkit-background-size: 24px;
         -moz-background-size: 24px;
         -o-background-size: 24px;
         background-size: 24px;
         animation: food-flashing 1s ease-in-out infinite alternate;}
 
-  100% {background: url('/static/images/snake-food-2.png') no-repeat center center;
+  100% {background: url('../static/images/snake-food-2.png') no-repeat center center;
         -webkit-background-size: 24px;
         -moz-background-size: 24px;
         -o-background-size: 24px;
