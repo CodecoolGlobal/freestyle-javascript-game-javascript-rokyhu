@@ -292,7 +292,6 @@ const game = {
                     } else {
                         return
                     }
-                    //TODO why is value null?
                 } else {
                     if (allBombs.length > 0){
                         let hit = game.checkIfHit();
@@ -305,7 +304,7 @@ const game = {
                 }
                 bomb.classList.remove('bomb');
                 row++;
-            }, 100);
+            }, 80);
         }
     },
 
@@ -351,7 +350,7 @@ const game = {
                 game.moveDown(enemyDivs);
             }
         }
-        }, 1000)
+        }, 1200)
     },
 }
 

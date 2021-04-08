@@ -104,7 +104,7 @@ body {
     display: flex;
     align-items:flex-end;
     justify-content:space-around;
-
+    animation: intro-flashing 1s ease-in-out infinite alternate;
 }
 label{
     color: white;
@@ -116,13 +116,15 @@ label{
     margin:0;
 }
 .myButton {
+    cursor:pointer;
     color: white;
     background-color: transparent;
     border: 1px solid transparent;
     padding: 15px;
-    font-family: NokiaFont;
+    font-family: NokiaFont, sans-serif;
 }
 .myButton:active{
+    cursor:pointer;
     border: 1px solid transparent;
 }
 
@@ -138,14 +140,13 @@ label{
     display: flex;
     align-items:flex-end;
     justify-content:space-around;
+    animation: intro-flashing 1s ease-in-out infinite alternate;
 }
 
 .board-header{
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    /*color: #9bc428  ;*/
-    /*background-color: #2d4307;*/
     color: black;
     background-color: darkgrey;
     padding: 8px 9px 0 9px;
@@ -159,4 +160,18 @@ label{
     bottom: 6vh;
     width: 50px;
     height: 50px;
+}
+
+@keyframes intro-flashing {
+  0%   {filter: invert(0);}
+  10%  {filter: invert(0);}
+  20%  {filter: invert(0);}
+  30%  {filter: invert(0);}
+  40%  {filter: invert(0);}
+  50%  {filter: invert(0);}
+  60%  {filter: invert(0%);}
+  70%  {filter: invert(25%);}
+  80%  {filter: invert(50%);}
+  90%  {filter: invert(75%);}
+  100% {filter: invert(100%);}
 }
