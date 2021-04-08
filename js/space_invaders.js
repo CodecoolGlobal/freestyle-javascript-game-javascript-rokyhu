@@ -1,5 +1,5 @@
 const game = {
-    rows : 12,
+    rows : 11,
     cols : 18,
     life: 3,
     score: 0,
@@ -127,13 +127,14 @@ const game = {
           '    <button class="myButton" id="back">Back</button>\n' +
           '</div>'
         );
+        document.removeEventListener('keydown', this.logKey);
         document.getElementById('restart').onclick = function(){
-            game.initStartScreen();
-            game.init();
-            }
-        document.getElementById('back').onclick = function(){window.history.back()}
+            location.reload();
+        }
+        document.getElementById('back').onclick = function(){
+            window.history.back()
+        }
     },
-
     initWinScreen: function(){
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
@@ -147,10 +148,12 @@ const game = {
           '</div>'
       );
         document.getElementById('restart').onclick = function(){
-        game.initStartScreen();
-        game.init(); //TODO !!! how to stop function and run it from beginning
+            window.refresh();
+        // game.initStartScreen();
+        // game.init(); //TODO !!! how to stop function and run it from beginning
         }
         document.getElementById('back').onclick = function(){window.history.back()}
+        document.removeEventListener('keydown', this.logKey)
     },
 
     clearScreen: function(){
@@ -192,7 +195,7 @@ const game = {
                         let gameStatus = game.checkIfWon();
                         if (gameStatus) {
                             clearInterval(shootStart);
-                            game.initWinScreen()
+                            game.initGameOverScreen()
                             }
                         }
                 prevShootPos.classList.remove('shoot');
@@ -212,14 +215,21 @@ const game = {
     },
 
     checkIfHit: function(){
-        let playerPos = document.querySelector(".player")
-        if (playerPos.classList.contains("bomb")){
+        let playerPos = document.querySelector(".player");
+        if (playerPos !== null){
+        let colPos = playerPos.dataset.col;
+        if (playerPos.parentElement.previousSibling.children[colPos].classList.contains("bomb")){
             this.life--;
+            playerPos.parentElement.previousSibling.children[colPos].classList.remove("bomb");
             game.changeHeaderData("life", this.life)
             if(this.life<=0){
                 game.changeHeaderData("life", this.life)
                 game.initGameOverScreen();
             }
+            return true;
+        }
+        }else{
+            return false;
         }
     },
 
@@ -256,17 +266,25 @@ const game = {
 
     moveBombs: function () {
         let allBombs = document.querySelectorAll(".bomb")
-        if (allBombs.length > 0){
-            game.checkIfHit();
-        }
+
         for (let bomb of allBombs) {
             let row = parseInt(bomb.dataset.row);
             let shootInvStart = setInterval(function () {
-                if (row < game.rows-2) {
+                if (row < game.rows-1) {
                     let nextShootPos = document.querySelector(`.field[data-col="${bomb.dataset.col}"][data-row="${parseInt(bomb.dataset.row) + 1}"]`);
                     if (nextShootPos !== null) {
-                    nextShootPos.classList.add('bomb');} //TODO why is value null?
+                    nextShootPos.classList.add('bomb');
+                    } else {
+                        return
+                    }
+                    //TODO why is value null?
                 } else {
+                    if (allBombs.length > 0){
+                        let hit = game.checkIfHit();
+                        if(hit){
+                            clearInterval(shootInvStart)
+                        }
+                    }
                     clearInterval(shootInvStart);
                     bomb.classList.remove('bomb');
                 }
@@ -298,7 +316,6 @@ const game = {
         let enemyDivs = document.querySelectorAll('[class*=enemy]')
         let enemyColumns = [...enemyDivs].map(item => {
             return item.dataset.col; })
-
         for (let index = 0; index < enemyDivs.length; index++) {
             let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
 
@@ -317,7 +334,7 @@ const game = {
                 direction = "left";
                 game.moveDown(enemyDivs)}
             }
-        }, 1000)
+        }, 1100)
     },
 }
 
