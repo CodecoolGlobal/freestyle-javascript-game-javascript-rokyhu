@@ -1,0 +1,197 @@
+@font-face {
+font-family: "NokiaFont";
+src: url("fonts/nokia-font.ttf");
+}
+
+body {
+    margin: 0;
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.arcade-machine {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    bottom: 0;
+    position: relative;
+    background: url(images/Arcade-Classics-frame-1200px.png) no-repeat center center fixed;
+    -webkit-background-size: 1200px;
+    -moz-background-size: 1200px;
+    -o-background-size: 1200px;
+    background-size: 1200px;
+
+}
+.board-header{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    color: #9bc428  ;
+    background-color: #2d4307;
+    padding: 9px 9px 0 9px;
+    flex-grow: 1;
+    font-family: NokiaFont, sans-serif;
+    font-size: 1.2rem;
+}
+
+.score-display {
+    font-family: NokiaFont, sans-serif;
+    font-size: 1.2rem;
+    padding: 9px 9px 0 9px;
+    text-align: center;
+    color: #212f18;
+    position: absolute;
+    bottom: 26px;
+    left: 100px;
+}
+
+.game-container {
+    width: 450px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: #9bc428;
+    position: relative;
+}
+
+.snake-intro-animation {
+    background: url(images/snake-intro.jpeg) no-repeat center center fixed;
+    -webkit-background-size: 540px;
+    -moz-background-size: 540px;
+    -o-background-size: 540px;
+    background-size: 540px;
+    animation: intro-flashing 1s ease-in-out infinite alternate;
+    cursor: pointer;
+}
+
+@keyframes intro-flashing {
+  0%   {filter: invert(0);}
+  10%  {filter: invert(0);}
+  20%  {filter: invert(0);}
+  30%  {filter: invert(0);}
+  40%  {filter: invert(0);}
+  50%  {filter: invert(0);}
+  60%  {filter: invert(0%);}
+  70%  {filter: invert(25%);}
+  80%  {filter: invert(50%);}
+  90%  {filter: invert(75%);}
+  100% {filter: invert(100%);}
+}
+
+.snake-outro-animation {
+    animation: outro-flashing 0.5s ease-in-out infinite alternate;
+    cursor: pointer;
+}
+
+@keyframes outro-flashing {
+  0%   {background: url(images/snake-outro-2.jpg) no-repeat center center fixed;
+        -webkit-background-size: 540px;
+        -moz-background-size: 540px;
+        -o-background-size: 540px;
+        background-size: 540px;
+        animation: outro-flashing 1s ease-in-out infinite alternate;
+        cursor: pointer;}
+  100% {background: url(images/snake-outro-1.jpg) no-repeat center center fixed;
+        -webkit-background-size: 540px;
+        -moz-background-size: 540px;
+        -o-background-size: 540px;
+        background-size: 540px;
+        animation: outro-flashing 1s ease-in-out infinite alternate;
+        cursor: pointer;}
+  }
+
+.row{
+    display: inherit;
+    /*padding: 0 9px 0 9px;*/
+}
+.board-field{
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    background: url('../static/images/snake-empty.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
+}
+.game-board{
+    display: inherit;
+    flex-direction: column;
+    /*padding: 0 9px 0 9px;*/
+    border: 9px solid #2d4307;
+}
+.snake {
+    background: url('../static/images/snake-pixel-4.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
+}
+
+.snake-head-up, .snake-head-down, .snake-head-left, .snake-head-right {
+    background: url('../static/images/snake-head-2.png') no-repeat center center;
+    -webkit-background-size: 24px;
+    -moz-background-size: 24px;
+    -o-background-size: 24px;
+    background-size: 24px;
+}
+
+.snake-head-up {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.snake-head-down {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+
+.snake-head-left {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.snake-head-right {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.snake-food {
+    animation: food-flashing 1s ease-in-out infinite alternate;
+}
+
+@keyframes food-flashing {
+  0%   {background: url('../static/images/snake-food.png') no-repeat center center;
+        -webkit-background-size: 24px;
+        -moz-background-size: 24px;
+        -o-background-size: 24px;
+        background-size: 24px;
+        animation: food-flashing 1s ease-in-out infinite alternate;}
+
+  100% {background: url('../static/images/snake-food-2.png') no-repeat center center;
+        -webkit-background-size: 24px;
+        -moz-background-size: 24px;
+        -o-background-size: 24px;
+        background-size: 24px;
+        animation: food-flashing 1s ease-in-out infinite alternate;}
+  }
