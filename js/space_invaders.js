@@ -307,49 +307,40 @@ const game = {
             }, 80);
         }
     },
-
-    moveDown: function (enemyDivs) {
-        for (let newIndex = 0; newIndex <= enemyDivs.length; newIndex++) {
-            let enemyClass = enemyDivs[newIndex].getAttribute('class').split(" ")[1];
-            let i = enemyDivs[newIndex].dataset.col;
-            let j = enemyDivs[newIndex].dataset.row;
-            let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
-            enemyDivs[newIndex].classList.remove(enemyClass);
-            lower.classList.add(enemyClass);
-
-        }
-    },
-
     moveInvaders: function () {
         let direction = "left";
         let enemyMoveInterval = setInterval(function () {
-        let isGameOver = game.checkIfGameOver();
-        if (isGameOver){
-                clearInterval(enemyMoveInterval)
-                game.initGameOverScreen();
-        }
-        let enemyDivs = document.querySelectorAll('[class*=enemy]')
-        let enemyColumns = [...enemyDivs].map(item => {
-            return item.dataset.col; })
-        for (let index = 0; index < enemyDivs.length; index++) {
-            let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
+            let isGameOver = game.checkIfGameOver();
+            if (isGameOver){
+                    clearInterval(enemyMoveInterval)
+                    game.initGameOverScreen();
+            }
+            let enemyDivs = document.querySelectorAll('[class*=enemy]');
+            let enemyColumns = [...enemyDivs].map(item => {
+                return item.dataset.col; })
             if (direction === "left" && !enemyColumns.includes('0')) {
-                enemyDivs[index].previousSibling.classList.add(enemyClass);
-                enemyDivs[index].classList.remove(enemyClass);
+                for (let enemy of enemyDivs){
+                    enemy.previousSibling.classList.add(enemy.classList[1]);
+                    enemy.classList.remove(enemy.classList[1]);
+                }
+            }else if (direction === "right" && !enemyColumns.includes(`${game.cols-1}`)) {
+                for (let enemy of enemyDivs){
+                    enemy.nextSibling.classList.add(enemy.classList[1]);
+                    enemy.classList.remove(enemy.classList[1]);
+                }
+            } else if (direction === "right" && enemyColumns.includes(`${game.cols-1}`)) {
+                direction="left";
+                for (let enemy of enemyDivs){
+                    enemy.parentElement.nextSibling.childNodes[enemy.dataset.col].classList.add(enemy.classList[1]);
+                    enemy.classList.remove(enemy.classList[1]);
+                }
+            } else if (direction === "left" && enemyColumns.includes('0')) {
+                direction="right";
+                for (let enemy of enemyDivs){
+                    enemy.parentElement.nextSibling.childNodes[enemy.dataset.col].classList.add(enemy.classList[1]);
+                    enemy.classList.remove(enemy.classList[1]);
+                }
             }
-            if (direction === "right" && !enemyColumns.includes(`${game.cols-1}`)) {
-                enemyDivs[index].nextSibling.classList.add(enemyClass);
-                enemyDivs[index].classList.remove(enemyClass);
-            }
-            if (enemyColumns.includes('0') && direction === "left") {
-                direction = "right";
-                game.moveDown(enemyDivs);
-            }
-            else if (enemyColumns.includes(`${game.cols-1}`) && direction === "right") {
-                direction = "left";
-                game.moveDown(enemyDivs);
-            }
-        }
         }, 1200)
     },
 }
