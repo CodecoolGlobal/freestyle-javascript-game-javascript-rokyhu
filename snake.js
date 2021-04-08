@@ -1,11 +1,18 @@
 window.onload = () => {
 
+    // setTimeout(function (){
+    //     alert(st.getSeconds());
+    //     }, 5000);
+
+
     const game = {
         direction: [0, -1], // default left dir
         snakeElements: [],
         snakeMoveInterval: {},
         powerupLocation: [3, 2],
         score: 0,
+        startTime: 0,
+        stopQueries: false,
 
         initGame: function () {
             let gameContainer = document.querySelector('.game-container')
@@ -17,12 +24,40 @@ window.onload = () => {
                 game.drawBoard();
                 game.spawnPowerup();
                 game.initKeypress();
+                game.startTime = new Date();
+                game.startTimer();
                 game.snakeMove();
                 gameContainer.removeEventListener('click', initGameFunction);
             }
-
         },
 
+        startTimer: function (){
+            setTimeout(game.stopwatchdisplay, 1000);
+        },
+
+        stopwatchdisplay: function () {
+        // later record end time
+        let endTime = new Date();
+
+        // time difference in ms
+        let timeDiff = endTime - game.startTime;
+
+        // strip the miliseconds
+        timeDiff /= 1000;
+
+        // get seconds
+        let seconds = Math.round(timeDiff % 60);
+
+        // remove seconds from the date
+        timeDiff = Math.floor(timeDiff / 60);
+        if (seconds.toString().length < 2 && game.stopQueries !== true) {
+            document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:0");
+        } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
+            document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:");
+        }
+        setTimeout(game.stopwatchdisplay, 1000);
+
+        },
         createBoard: function(){
             let board = document.querySelector('.game-container');
             board.classList.remove('snake-intro-animation')
@@ -82,7 +117,7 @@ window.onload = () => {
         createHeader: function (board) {
             board.insertAdjacentHTML(
                 'beforeend',
-                '<div class="board-header"><div class="score">0</div><div>0:21</div></div>'
+                '<div class="board-header"><div class="score">0</div><div class="timer">0:00</div></div>'
             );
         },
 
@@ -128,15 +163,18 @@ window.onload = () => {
             } catch {  // this is when snake goes off the board
                 game.gameOver()
             }
-            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-up')
-            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-down')
-            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-left')
-            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-right')
-            document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.add('snake')
-            document.querySelector(`[data-row="${game.snakeElements[game.snakeElements.length - 1][0]}"][data-col="${game.snakeElements[game.snakeElements.length - 1][1]}"]`).classList.remove('snake')
+            if(game.stopQueries !== true){
+                document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-up')
+                document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-down')
+                document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-left')
+                document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-right')
+                document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.add('snake')
+                document.querySelector(`[data-row="${game.snakeElements[game.snakeElements.length - 1][0]}"][data-col="${game.snakeElements[game.snakeElements.length - 1][1]}"]`).classList.remove('snake')
+            }
         },
 
         gameOver: function () {
+            game.stopQueries = true;
             clearInterval(game.snakeMoveInterval);
             let gameContainer = document.querySelector('.game-container')
             while (gameContainer.firstChild) {
