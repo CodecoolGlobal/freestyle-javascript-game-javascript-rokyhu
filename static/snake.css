@@ -5,7 +5,7 @@ src: url("fonts/nokia-font.ttf");
 
 body {
     margin: 0;
-    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,7 +22,7 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center;
     -webkit-background-size: 1000px;
     -moz-background-size: 1000px;
     -o-background-size: 1000px;
@@ -62,11 +62,11 @@ body {
 }
 
 .snake-intro-animation {
-    background: url(images/snake-intro.jpeg) no-repeat center center fixed;
-    -webkit-background-size: 540px;
-    -moz-background-size: 540px;
-    -o-background-size: 540px;
-    background-size: 540px;
+    background: url(images/snake-intro.jpeg) no-repeat center center;
+    -webkit-background-size: 450px 300px;
+    -moz-background-size: 450px 300px;
+    -o-background-size: 450px 300px;
+    background-size: 450px 300px;
     animation: intro-flashing 1s ease-in-out infinite alternate;
     cursor: pointer;
 }
@@ -91,14 +91,14 @@ body {
 }
 
 @keyframes outro-flashing {
-  0%   {background: url(images/snake-outro-2.jpg) no-repeat center center fixed;
+  0%   {background: url(images/snake-outro-2.jpg) no-repeat center center;
         -webkit-background-size: 540px;
         -moz-background-size: 540px;
         -o-background-size: 540px;
         background-size: 540px;
         animation: outro-flashing 1s ease-in-out infinite alternate;
         cursor: pointer;}
-  100% {background: url(images/snake-outro-1.jpg) no-repeat center center fixed;
+  100% {background: url(images/snake-outro-1.jpg) no-repeat center center;
         -webkit-background-size: 540px;
         -moz-background-size: 540px;
         -o-background-size: 540px;
@@ -197,7 +197,7 @@ body {
   }
 
 .back-button {
-    position: absolute;
+    position: fixed;
     left: 6vw;
     bottom: 6vh;
     width: 50px;

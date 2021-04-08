@@ -4,7 +4,7 @@ src: url("fonts/nokia-font.ttf");
 }
 body {
     margin: 0;
-    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -21,7 +21,7 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center;
     -webkit-background-size: 1000px;
     -moz-background-size: 1000px;
     -o-background-size: 1000px;
@@ -155,7 +155,7 @@ label{
     font-size: 1.2rem;
 }
 .back-button {
-    position: absolute;
+    position: fixed;
     left: 6vw;
     bottom: 6vh;
     width: 50px;
