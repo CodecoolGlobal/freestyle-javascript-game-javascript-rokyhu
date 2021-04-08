@@ -5,7 +5,7 @@ src: url("fonts/nokia-font.ttf");
 
 body {
     margin: 0;
-    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -23,7 +23,7 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center;
     -webkit-background-size: 1000px;
     -moz-background-size: 1000px;
     -o-background-size: 1000px;
@@ -60,3 +60,39 @@ body {
     background-color: #2d4307;
     color: darkseagreen;
 }
+
+.mobile-only-warning {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    top: 10vh;
+    font-family: NokiaFont, sans-serif;
+    font-size: 3rem;
+    padding: 18px 18px 0 18px;
+    box-sizing: border-box;
+    text-align: center;
+    animation: message-flashing 1s ease-in-out infinite alternate;
+}
+
+@media only screen and (max-device-width: 736px) {
+    .mobile-only-warning {
+        display: block;
+        position: fixed;
+        width: 100vw;
+        top: 10vh;
+        font-family: NokiaFont, sans-serif;
+        font-size: 3rem;
+        padding: 18px 18px 0 18px;
+        box-sizing: border-box;
+        text-align: center;
+        animation: message-flashing 1s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes message-flashing {
+  0%   {color: white;
+        filter: drop-shadow(0 0 0.75rem crimson);}
+
+  100% {color: darkseagreen;
+        filter: drop-shadow(0 0 0.75rem crimson);}
+  }
