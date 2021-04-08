@@ -8,6 +8,7 @@ window.onload = () => {
         score: 0,
         startTime: 0,
         stopQueries: false,
+        speed: 300, // default: 300ms move speed
 
         initGame: function () {
             let gameContainer = document.querySelector('.game-container')
@@ -27,22 +28,29 @@ window.onload = () => {
         },
 
         startTimer: function (){
-            setTimeout(game.stopwatchDisplay, 1000);
+            setTimeout(game.timerDisplay, 1000);
         },
-
-        stopwatchDisplay: function () {
+        movementSpeedIncrease: function(){
+            clearInterval(this.snakeMoveInterval);
+            game.snakeMove();
+            game.speed -= 20;
+        },
+        timerDisplay: function () {
             let endTime = new Date();
             let timeDiff = endTime - game.startTime;
             timeDiff /= 1000;
             let seconds = Math.round(timeDiff % 60);
+            timeDiff = Math.floor(timeDiff / 60);
+            let minutes = Math.round(timeDiff % 60);
+
 
             if (seconds.toString().length < 2 && game.stopQueries !== true) {
-                document.querySelector('.timer').textContent = "Time: " + String(seconds).padStart(4, "0:0");
-            } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
-                document.querySelector('.timer').textContent = "Time: " + String(seconds).padStart(4, "0:");
+                document.querySelector('.timer').textContent = "Time: " + String(minutes) + ":" +String(seconds).padStart(2, "0");
+            } else if(seconds.toString().length >= 2 && game.stopQueries !== true) {
+                document.querySelector('.timer').textContent = "Time: " + String(minutes) + ":" +String(seconds);
             }
             if (game.stopQueries !== true)
-                setTimeout(game.stopwatchDisplay, 1000);
+                setTimeout(game.timerDisplay, 1000);
 
         },
         createBoard: function(){
@@ -193,6 +201,8 @@ window.onload = () => {
             game.updateBoard(currentDir)
             if(this.isHeadOnPowerupField(newSnakeHeadIndex)){
                 this.score++;
+                if(game.score % 2 === 0)
+                    game.movementSpeedIncrease();
                 document.querySelector('.score').textContent = "Score: " + game.score;
                 let food = document.querySelector(`[data-row="${game.powerupLocation[0]}"][data-col="${game.powerupLocation[1]}"]`);
                 food.classList.remove('snake-food')
@@ -215,7 +225,7 @@ window.onload = () => {
             game.snakeMoveInterval = setInterval(function () {
                 game.moveSnake()
             },
-            300)
+            game.speed)
         }
     }
 
