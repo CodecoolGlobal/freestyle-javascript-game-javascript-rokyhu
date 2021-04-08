@@ -20,6 +20,8 @@ const game = {
         this.createHeader();
         this.drawBoard();
         this.initKeyPress();
+        this.startTime = new Date();
+        this.startTimer();
         this. moveInvaders();
         this.initInvadersShoot();
     },
@@ -99,6 +101,24 @@ const game = {
             }
     },
 
+    startTimer: function (){
+        setTimeout(game.stopwatchDisplay, 1000);
+    },
+
+    stopwatchDisplay: function () {
+        let endTime = new Date();
+        let timeDiff = endTime - game.startTime;
+        timeDiff /= 1000;
+        let seconds = Math.round(timeDiff % 60);
+        if (seconds.toString().length < 2 && game.stopQueries !== true) {
+             game.changeHeaderData("time", String(seconds).padStart(4, "0:0"));
+        } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
+            game.changeHeaderData("time", String(seconds).padStart(4, "0:"));
+        }
+        if (game.stopQueries !== true)
+            setTimeout(game.stopwatchDisplay, 1000);
+    },
+
     checkIfWon: function(){
       let enemies = document.querySelectorAll('[class*=enemy]');
       if(enemies.length===0){
@@ -147,13 +167,12 @@ const game = {
           '    <button class="myButton" id="back">Back</button>\n' +
           '</div>'
       );
+        document.removeEventListener('keydown', this.logKey);
         document.getElementById('restart').onclick = function(){
-            window.refresh();
-        // game.initStartScreen();
-        // game.init(); //TODO !!! how to stop function and run it from beginning
+            location.reload();
         }
-        document.getElementById('back').onclick = function(){window.history.back()}
-        document.removeEventListener('keydown', this.logKey)
+        document.getElementById('back').onclick = function(){
+            window.history.back()}
     },
 
     clearScreen: function(){
@@ -195,7 +214,7 @@ const game = {
                         let gameStatus = game.checkIfWon();
                         if (gameStatus) {
                             clearInterval(shootStart);
-                            game.initGameOverScreen()
+                            game.initWinScreen()
                             }
                         }
                 prevShootPos.classList.remove('shoot');
