@@ -1,10 +1,5 @@
 window.onload = () => {
 
-    // setTimeout(function (){
-    //     alert(st.getSeconds());
-    //     }, 5000);
-
-
     const game = {
         direction: [0, -1], // default left dir
         snakeElements: [],
@@ -32,30 +27,22 @@ window.onload = () => {
         },
 
         startTimer: function (){
-            setTimeout(game.stopwatchdisplay, 1000);
+            setTimeout(game.stopwatchDisplay, 1000);
         },
 
-        stopwatchdisplay: function () {
-        // later record end time
-        let endTime = new Date();
+        stopwatchDisplay: function () {
+            let endTime = new Date();
+            let timeDiff = endTime - game.startTime;
+            timeDiff /= 1000;
+            let seconds = Math.round(timeDiff % 60);
 
-        // time difference in ms
-        let timeDiff = endTime - game.startTime;
-
-        // strip the miliseconds
-        timeDiff /= 1000;
-
-        // get seconds
-        let seconds = Math.round(timeDiff % 60);
-
-        // remove seconds from the date
-        timeDiff = Math.floor(timeDiff / 60);
-        if (seconds.toString().length < 2 && game.stopQueries !== true) {
-            document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:0");
-        } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
-            document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:");
-        }
-        setTimeout(game.stopwatchdisplay, 1000);
+            if (seconds.toString().length < 2 && game.stopQueries !== true) {
+                document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:0");
+            } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
+                document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:");
+            }
+            if (game.stopQueries !== true)
+                setTimeout(game.stopwatchDisplay, 1000);
 
         },
         createBoard: function(){
