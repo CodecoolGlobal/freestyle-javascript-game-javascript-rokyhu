@@ -131,17 +131,25 @@ window.onload = () => {
         },
 
         initKeypress: function () {
-            document.addEventListener("keydown", function (event){
-                if(event.key === 'ArrowUp' && game.direction[0] !== 1 && game.direction[1] !== 0){
-                    game.direction = [-1, 0];
-                } else if(event.key === 'ArrowDown' && game.direction[0] !== -1 && game.direction[1] !== 0){
-                    game.direction = [1, 0];
-                } else if(event.key === 'ArrowLeft' && game.direction[0] !== 0 && game.direction[1] !== 1){
-                    game.direction = [0, -1];
-                } else if(event.key === 'ArrowRight' && game.direction[0] !== 0 && game.direction[1] !== -1){
-                    game.direction = [0, 1];
-                }
-            });
+            document.addEventListener("keydown", game.handleKeypress, );
+
+        },
+
+        removeKeypress: function () {
+            document.removeEventListener("keydown", game.handleKeypress);
+        },
+
+        handleKeypress: function (event) {
+            if(event.key === 'ArrowUp' && game.direction[0] !== 1 && game.direction[1] !== 0){
+                game.direction = [-1, 0];
+            } else if(event.key === 'ArrowDown' && game.direction[0] !== -1 && game.direction[1] !== 0){
+                game.direction = [1, 0];
+            } else if(event.key === 'ArrowLeft' && game.direction[0] !== 0 && game.direction[1] !== 1){
+                game.direction = [0, -1];
+            } else if(event.key === 'ArrowRight' && game.direction[0] !== 0 && game.direction[1] !== -1){
+                game.direction = [0, 1];
+            }
+            game.removeKeypress();
         },
 
         updateBoard: function (currentDir) {
@@ -156,7 +164,7 @@ window.onload = () => {
                     document.querySelector(`[data-row="${game.snakeElements[0][0]}"][data-col="${game.snakeElements[0][1]}"]`).classList.add('snake-head-right')
                 }
             } catch {  // this is when snake goes off the board
-                game.gameOver()
+                game.gameOver();
             }
             if(game.stopQueries !== true){
                 document.querySelector(`[data-row="${game.snakeElements[1][0]}"][data-col="${game.snakeElements[1][1]}"]`).classList.remove('snake-head-up')
@@ -191,6 +199,7 @@ window.onload = () => {
         },
 
         moveSnake: function () {
+
             let currentDir = game.direction;
             let newSnakeHeadIndex = [parseInt(`${game.snakeElements[0][0]+currentDir[0]}`), parseInt(`${game.snakeElements[0][1]+currentDir[1]}`)];
             if (game.isNewSnakeHeadInSnake(newSnakeHeadIndex)) {
@@ -224,6 +233,7 @@ window.onload = () => {
         snakeMove: function () {
             game.snakeMoveInterval = setInterval(function () {
                 game.moveSnake()
+                game.initKeypress();
             },
             game.speed)
         }
