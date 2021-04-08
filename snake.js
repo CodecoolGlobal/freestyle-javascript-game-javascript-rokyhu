@@ -37,9 +37,9 @@ window.onload = () => {
             let seconds = Math.round(timeDiff % 60);
 
             if (seconds.toString().length < 2 && game.stopQueries !== true) {
-                document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:0");
+                document.querySelector('.timer').textContent = "Time: " + String(seconds).padStart(4, "0:0");
             } else if(seconds.toString().length >= 2 && game.stopQueries !== true){
-                document.querySelector('.timer').textContent = String(seconds).padStart(4, "0:");
+                document.querySelector('.timer').textContent = "Time: " + String(seconds).padStart(4, "0:");
             }
             if (game.stopQueries !== true)
                 setTimeout(game.stopwatchDisplay, 1000);
@@ -104,7 +104,7 @@ window.onload = () => {
         createHeader: function (board) {
             board.insertAdjacentHTML(
                 'beforeend',
-                '<div class="board-header"><div class="score">0</div><div class="timer">0:00</div></div>'
+                '<div class="board-header"><div class="score">Score: 0</div><div class="timer">Time: 0:00</div></div>'
             );
         },
 
@@ -193,7 +193,7 @@ window.onload = () => {
             game.updateBoard(currentDir)
             if(this.isHeadOnPowerupField(newSnakeHeadIndex)){
                 this.score++;
-                document.querySelector('.score').textContent++;
+                document.querySelector('.score').textContent = "Score: " + game.score;
                 let food = document.querySelector(`[data-row="${game.powerupLocation[0]}"][data-col="${game.powerupLocation[1]}"]`);
                 food.classList.remove('snake-food')
                 this.spawnPowerup()
