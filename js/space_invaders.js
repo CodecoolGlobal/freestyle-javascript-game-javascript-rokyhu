@@ -1,4 +1,5 @@
 const game = {
+    stopQueries: false,
     rows : 11,
     cols : 18,
     life: 3,
@@ -22,18 +23,17 @@ const game = {
         this.initKeyPress();
         this.startTime = new Date();
         this.startTimer();
-        this. moveInvaders();
+        this.moveInvaders();
         this.initInvadersShoot();
     },
 
     createHeader: function () {
         if (! document.querySelector(".board-header")) {
             let board = document.querySelector('.game-container');
-            //TODO can we put below life and score variables?
                 board.insertAdjacentHTML(
                     'afterbegin',
-                    '<div class="board-header">' +
-                    '<div>Life: <span id="life">3</span></div>' +
+                     '<div class="board-header">' +
+                    `<div>Life: <span id="life">${this.life}</span></div>` +
                     '<div>Score: <span id="score">0</span></div>' +
                     '<div><span id="time">0:00</span></div></div>'
             )}
@@ -136,13 +136,12 @@ const game = {
     },
 
     initGameOverScreen: function(){
+        game.stopQueries = true;
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
         mainScreen.insertAdjacentHTML(
           'beforeend',
           '<div class="gameoverscreen">\n' +
-          // '    <h3 class="titlemsg">Game over</h3>\n' +
-          // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
           '    <button class="myButton" id="restart">Restart</button>\n' +
           '    <button class="myButton" id="back">Back</button>\n' +
           '</div>'
@@ -156,13 +155,12 @@ const game = {
         }
     },
     initWinScreen: function(){
+        game.stopQueries = true;
         game.clearScreen();
         let mainScreen = document.querySelector('.game-field');
         mainScreen.insertAdjacentHTML(
           'beforeend',
           '<div class="winscreen">\n' +
-          // '    <h3 class="titlemsg">Game over</h3>\n' +
-          // '    <h5 class="subtitle">Insert coin to continue</h5>\n' +
           '    <button class="myButton" id="restart">Restart</button>\n' +
           '    <button class="myButton" id="back">Back</button>\n' +
           '</div>'
@@ -203,9 +201,7 @@ const game = {
                 let prevShootPos = document.querySelector(`.field[data-col="${j}"][data-row="${i+1}"]`);
                 if (shootPos !== null && prevShootPos !== null) {
                     shootPos.classList.add('shoot'); //TODO why is value null?
-                    // TODO can we change below statement to regex?
-                    if (shootPos.classList.contains("first_enemy") || shootPos.classList.contains("second_enemy") || shootPos.classList.contains("third_enemy")
-                    || shootPos.classList.contains("fourth_enemy") || shootPos.classList.contains("bomb")){
+                    if(shootPos.getAttribute("class").match(/enemy/) || shootPos.classList.contains("bomb")){
                         clearInterval(shootStart);
                         game.clearShootBeams();
                         let enemyClass = shootPos.getAttribute('class').split(" ")[1];
@@ -321,6 +317,7 @@ const game = {
             let lower = document.querySelector(`.field[data-col="${i}"][data-row="${parseInt(j) + 1}"]`)
             enemyDivs[newIndex].classList.remove(enemyClass);
             lower.classList.add(enemyClass);
+
         }
     },
 
@@ -337,7 +334,6 @@ const game = {
             return item.dataset.col; })
         for (let index = 0; index < enemyDivs.length; index++) {
             let enemyClass = enemyDivs[index].getAttribute('class').split(" ")[1];
-
             if (direction === "left" && !enemyColumns.includes('0')) {
                 enemyDivs[index].previousSibling.classList.add(enemyClass);
                 enemyDivs[index].classList.remove(enemyClass);
@@ -348,12 +344,14 @@ const game = {
             }
             if (enemyColumns.includes('0') && direction === "left") {
                 direction = "right";
-                game.moveDown(enemyDivs)}
+                game.moveDown(enemyDivs);
+            }
             else if (enemyColumns.includes(`${game.cols-1}`) && direction === "right") {
                 direction = "left";
-                game.moveDown(enemyDivs)}
+                game.moveDown(enemyDivs);
             }
-        }, 1100)
+        }
+        }, 1000)
     },
 }
 

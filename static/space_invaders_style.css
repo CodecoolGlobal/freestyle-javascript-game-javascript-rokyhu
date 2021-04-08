@@ -4,8 +4,11 @@ src: url("fonts/nokia-font.ttf");
 }
 body {
     margin: 0;
-    background-image: url("images/arcade-wallpaper.jpg");
-
+    background: url(images/arcade-wallpaper.jpg) no-repeat center center fixed ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .arcade-machine {
@@ -18,12 +21,11 @@ body {
     margin: 0 auto;
     bottom: 0;
     position: relative;
-    background: url(images/Arcade-Classics-frame-900px.png) no-repeat center center fixed;
-    -webkit-background-size: 900px;
-    -moz-background-size: 900px;
-    -o-background-size: 900px;
-    background-size: 900px;
-
+    background: url(images/Arcade-Classics-frame-1000px.png) no-repeat center center fixed;
+    -webkit-background-size: 1000px;
+    -moz-background-size: 1000px;
+    -o-background-size: 1000px;
+    background-size: 1000px;
 }
 
 .game-container {
@@ -92,7 +94,7 @@ body {
 }
 .winscreen{
     width: 450px;
-    height: 290px;
+    height: 268px;
     background-color: black;
     text-align: center;
     background-image: url('/static/images/win.png');
@@ -150,4 +152,11 @@ label{
     flex-grow: 1;
     font-family: NokiaFont, sans-serif;
     font-size: 1.2rem;
+}
+.back-button {
+    position: absolute;
+    left: 6vw;
+    bottom: 6vh;
+    width: 50px;
+    height: 50px;
 }
